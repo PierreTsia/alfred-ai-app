@@ -1,21 +1,24 @@
 # Educational AI Assistant Project
 
 ## Project Vision
+
 An AI-powered personal assistant designed for students aged 10-18 to support their educational journey.
 
 ### Core Features
+
 - **Daily Learning Reflection**: Help students verbalize their daily achievements
 - **Goal Setting**: Assist in setting objectives for the next day
 - **Comprehension Support**: Ensure lessons are understood and provide additional help
 - **Progress Tracking**: Maintain logs of studied topics and personal assessments
 - **Contextual Awareness**: Follow up on previous discussions and activities
 - **Proactive Engagement**: Initiate conversations about the student's learning journey
-- **Resource Management**: 
+- **Resource Management**:
   - Support for lesson material uploads (PDF, images)
   - Context-aware discussions about uploaded content
   - Visual learning support through shared materials
 
 ### AI Personality
+
 - Friendly and concise communication style
 - Embodies a knowledgeable, fun, and inspiring young teacher
 - Acts as a source of inspiration for young minds
@@ -23,21 +26,23 @@ An AI-powered personal assistant designed for students aged 10-18 to support the
 ## Technical Architecture
 
 ### Core Technologies
+
 - **LLM Integration**: Together AI services for inference
   - Base model: Llama 3.1 70B from Meta
 - **Foundation**: Based on [LlamaTutor](https://github.com/Nutlope/llamatutor)
 
 ### Frontend Stack
+
 - **Framework**: Next.js with App Router
 - **Language**: TypeScript
-- **Styling**: 
+- **Styling**:
   - Tailwind CSS for utility-first styling
   - shadcn/ui for core components
     - Accessible components
     - Dark mode support
     - Customizable design system
 - **UI Library**: React components
-- **Internationalization**: 
+- **Internationalization**:
   - next-intl for message translations
   - Type-safe messages using TypeScript
   - Simple JSON-based translations
@@ -55,6 +60,7 @@ An AI-powered personal assistant designed for students aged 10-18 to support the
     ```
 
 ### Authentication & User Management
+
 - **Platform**: Clerk.js
   - Custom authentication flows
   - User profiles and session handling
@@ -68,6 +74,7 @@ An AI-powered personal assistant designed for students aged 10-18 to support the
     ```
 
 ### Additional Services
+
 - **Search**: Serper API
 - **File Storage**: Uploadthing
   - Purpose-built for Next.js applications
@@ -79,25 +86,27 @@ An AI-powered personal assistant designed for students aged 10-18 to support the
     UPLOADTHING_SECRET
     UPLOADTHING_APP_ID
     ```
-- **Monitoring**: 
+- **Monitoring**:
   - Helicone for LLM observability
   - Plausible for privacy-friendly analytics
 
 ### Database
-- **Platform**: Vercel Postgres
-  - Simple setup and zero-config deployment with Next.js
-  - Built on Neon's serverless PostgreSQL
-  - Sufficient for POC/MVP needs
-  - Free tier available for development
-  - Easy local development with Prisma
-  - Required environment variables:
+
+- **Platform**: Convex
+  - Document-based database with built-in reactivity
+  - Native TypeScript support
+  - Automatic caching and real-time updates
+  - Simplified database management
+  - Built-in query optimization
+  - Environment variables:
     ```
-    POSTGRES_URL
-    POSTGRES_PRISMA_URL
-    POSTGRES_URL_NON_POOLING
+    NEXT_PUBLIC_CONVEX_URL
+    CONVEX_DEPLOYMENT
+    CONVEX_ADMIN_KEY
     ```
 
 ### Development Tools
+
 - ESLint (linting)
 - Prettier (formatting)
 - PostCSS (CSS processing)
@@ -105,16 +114,13 @@ An AI-powered personal assistant designed for students aged 10-18 to support the
 - Environment variables management
 
 ### Environment Setup
+
 Required environment variables:
-```env
+
+```
 # Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 CLERK_SECRET_KEY
-
-# Database
-POSTGRES_URL
-POSTGRES_PRISMA_URL
-POSTGRES_URL_NON_POOLING
 
 # File Storage
 UPLOADTHING_SECRET
@@ -132,11 +138,13 @@ PLAUSIBLE_API_KEY
 ## User Journey
 
 ### Authentication Flow
+
 - User logs in via Clerk.js authentication
 - Assistant greets user personally, referencing their profile and recent history
 - Time-aware interactions based on user's local time
 
 ### First-Time Experience
+
 - **Morning Login**: Focus on day planning and goal setting
   - Upcoming lessons preparation
   - Learning objectives for the day
@@ -146,6 +154,7 @@ PLAUSIBLE_API_KEY
   - Challenges encountered
 
 ### Daily Interactions
+
 - **Context-Aware Conversations**
   - References scheduled subjects from user's timetable
   - Follows up on previous learning goals
@@ -156,6 +165,7 @@ PLAUSIBLE_API_KEY
     - "I notice this PDF is about Shakespeare. What aspects of the play would you like to explore?"
 
 ### Learning Reflection
+
 - **Guided Discussion Points**
   - Subject-specific reflection
   - Key concepts learned
@@ -168,10 +178,12 @@ This personalized approach ensures meaningful educational support while maintain
 ## Documentation References
 
 ### Core Technologies
+
 - [Together AI Documentation](https://docs.together.ai/docs/introduction)
 - [LlamaTutor Repository](https://github.com/Nutlope/llamatutor)
 
 ### Frontend & UI
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
@@ -179,19 +191,24 @@ This personalized approach ensures meaningful educational support while maintain
 - [React Documentation](https://react.dev/learn)
 
 ### Authentication & User Management
+
 - [Clerk.js Documentation](https://clerk.com/docs)
 
 ### Database & Infrastructure
-- [Vercel Postgres Documentation](https://vercel.com/docs/storage/vercel-postgres)
-- [Prisma Documentation](https://www.prisma.io/docs)
+
+- [Convex Documentation](https://docs.convex.dev/home)
+- [Convex TypeScript Guide](https://docs.convex.dev/typescript)
+- [Convex React Documentation](https://docs.convex.dev/client/react)
 
 ### Additional Services
+
 - [Serper API Documentation](https://serper.dev/docs)
 - [Uploadthing Documentation](https://docs.uploadthing.com)
 - [Helicone Documentation](https://docs.helicone.ai/)
 - [Plausible Analytics Documentation](https://plausible.io/docs)
 
 ### Development Tools
+
 - [ESLint Documentation](https://eslint.org/docs/latest/)
 - [Prettier Documentation](https://prettier.io/docs/en/)
 - [PostCSS Documentation](https://postcss.org/docs/)
@@ -199,27 +216,28 @@ This personalized approach ensures meaningful educational support while maintain
 This reference list includes all major technologies and tools used in the project for easy access during development.
 
 ### Error Handling & Monitoring
+
 - Error boundary implementation
 - API error handling strategy
 - Monitoring and logging approach
 
 ### Performance Considerations
+
 - Image optimization with Next.js Image
 - API route caching strategies
 - Database query optimization
 
 ### Security Measures
+
 - Authentication with Clerk.js
 - API route protection
 - File upload validation
 - Rate limiting implementation
 
 ### Deployment
+
 - Platform: Vercel
 - Database: Vercel Postgres
 - Environment Variables: Configured in Vercel dashboard
 - Build Command: `pnpm build`
 - Output Directory: `.next`
-
-
-

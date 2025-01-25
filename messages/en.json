@@ -1,0 +1,73 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "subtitle": "Demonstrating Auth, Localization, and Persistence",
+    "auth": {
+      "title": "Authentication",
+      "signInPrompt": "Sign in to view your profile",
+      "signInButton": "Sign In",
+      "signOutButton": "Sign Out"
+    },
+    "localization": {
+      "title": "Localization",
+      "switchPrompt": "Switch between available languages:",
+      "currentLabel": "Current Language"
+    },
+    "persistence": {
+      "title": "Persistence",
+      "signInPrompt": "Sign in to manage your tasks"
+    },
+    "chat": {
+      "title": "Your AI Learning Assistant",
+      "subtitle": "Ask questions, manage tasks, and get personalized guidance from your AI tutor",
+      "signInPrompt": "Sign in to chat with your AI assistant and manage your learning tasks",
+      "startPrompt": "Ask about your tasks or start learning...",
+      "messagePlaceholder": "Ask a question or discuss your tasks...",
+      "commands": {
+        "title": "Quick commands:",
+        "task": "Create a new task",
+        "list": "View all tasks"
+      }
+    }
+  },
+  "UserProfile": {
+    "title": "User Profile",
+    "description": "Your account information",
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "welcome": "Welcome back, {name}",
+    "settings": "Account Settings"
+  },
+  "TaskList": {
+    "addPlaceholder": "Add a new task...",
+    "markComplete": "Mark task as complete",
+    "markIncomplete": "Mark task as incomplete",
+    "removeTask": "Remove task"
+  },
+  "Chat": {
+    "startPrompt": "Ask about your tasks or start learning...",
+    "messagePlaceholder": "Type your message or ask about your tasks...",
+    "assistantAvatar": "AI Assistant Avatar",
+    "taskCreated": "✅ Task created successfully!"
+  },
+  "TaskProposal": {
+    "title": "New Task Proposal",
+    "text": "Task",
+    "priority": {
+      "label": "Priority",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "description": "Description",
+    "dueDate": "Due Date",
+    "confirm": "Create Task"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "languages": {
+      "en": "English",
+      "fr": "French"
+    }
+  }
+}

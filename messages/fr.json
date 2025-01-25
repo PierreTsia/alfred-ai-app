@@ -1,0 +1,74 @@
+{
+  "HomePage": {
+    "title": "Bonjour monde!",
+    "subtitle": "Démonstration d'Authentification, Localisation et Persistance",
+    "auth": {
+      "title": "Authentification",
+      "signInPrompt": "Connectez-vous consulter votre profile",
+
+      "signInButton": "Se connecter",
+      "signOutButton": "Se déconnecter"
+    },
+    "localization": {
+      "title": "Localisation",
+      "switchPrompt": "Choisissez une langue :",
+      "currentLabel": "Langue actuelle"
+    },
+    "persistence": {
+      "title": "Persistance",
+      "signInPrompt": "Connectez-vous pour consulter vos tâches"
+    },
+    "chat": {
+      "title": "Votre Assistant d'Apprentissage IA",
+      "subtitle": "Posez des questions, gérez vos tâches et obtenez des conseils personnalisés de votre tuteur IA",
+      "signInPrompt": "Connectez-vous pour discuter avec votre assistant IA et gérer vos tâches d'apprentissage",
+      "startPrompt": "Interrogez vos tâches ou commencez à apprendre...",
+      "messagePlaceholder": "Posez une question ou discutez de vos tâches...",
+      "commands": {
+        "title": "Commandes rapides :",
+        "task": "Créer une nouvelle tâche",
+        "list": "Voir toutes les tâches"
+      }
+    }
+  },
+  "UserProfile": {
+    "title": "Profil Utilisateur",
+    "description": "Vos informations de compte",
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter",
+    "welcome": "Bienvenue, {name}",
+    "settings": "Paramètres du compte"
+  },
+  "TaskList": {
+    "addPlaceholder": "Ajouter une nouvelle tâche...",
+    "markComplete": "Marquer comme terminée",
+    "markIncomplete": "Marquer comme non terminée",
+    "removeTask": "Supprimer la tâche"
+  },
+  "Chat": {
+    "startPrompt": "Interrogez vos tâches ou commencez à apprendre...",
+    "messagePlaceholder": "Tapez votre message ou interrogez vos tâches...",
+    "assistantAvatar": "Avatar de l'Assistant IA",
+    "taskCreated": "✅ Tâche créée avec succès !"
+  },
+  "TaskProposal": {
+    "title": "Proposition de Tâche",
+    "text": "Tâche",
+    "priority": {
+      "label": "Priorité",
+      "low": "Basse",
+      "medium": "Moyenne",
+      "high": "Haute"
+    },
+    "description": "Description",
+    "dueDate": "Date d'échéance",
+    "confirm": "Créer la tâche"
+  },
+  "LocaleSwitcher": {
+    "label": "Changer de langue",
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français"
+    }
+  }
+}
