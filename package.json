@@ -9,7 +9,9 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json,css}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,md,json,css}\"",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "type-check:strict": "tsc --noEmit --strict"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.10.2",

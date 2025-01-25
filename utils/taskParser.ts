@@ -1,4 +1,5 @@
-import { TaskProposal, ActionableResponse } from "./types";
+
+import { TaskProposal } from "@/types";
 
 export const parseTaskProposal = (message: string): TaskProposal | null => {
   try {
