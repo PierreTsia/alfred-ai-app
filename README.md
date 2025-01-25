@@ -7,14 +7,36 @@
   An open source AI personal tutor. Powered by Llama 3 70B & Together.ai
 </p>
 
-## Tech stack
+## Tech Stack
 
-- Llama 3.1 70B from Meta for the LLM
-- Together AI for LLM inference
-- Next.js app router with Tailwind
-- Serper for the search API
-- Helicone for observability
-- Plausible for website analytics
+### AI & Machine Learning
+- [Together AI](https://docs.together.ai/) - LLM inference platform
+- [Llama 3.1 70B](https://ai.meta.com/llama/) - Large Language Model from Meta
+
+### Framework & Core
+- [Next.js 14](https://nextjs.org/docs) - React framework with App Router
+- [TypeScript](https://www.typescriptlang.org/docs/) - Type-safe JavaScript
+- [Tailwind CSS](https://tailwindcss.com/docs) - Utility-first CSS framework
+
+### Authentication & User Management
+- [Clerk](https://clerk.com/docs) - Authentication and user management
+
+### UI Components & Styling
+- [shadcn/ui](https://ui.shadcn.com/docs) - Re-usable components built with Radix UI and Tailwind
+- [Lucide Icons](https://lucide.dev/docs/lucide-react) - Beautiful open-source icons
+
+### Data & API
+- [Convex](https://docs.convex.dev/) - Backend platform and real-time database
+- [Zod](https://zod.dev/) - TypeScript-first schema validation
+
+### Search & Analytics
+- [SERP API](https://serper.dev/) - Search engine results API
+- [Helicone](https://docs.helicone.ai/) - LLM observability platform
+- [Plausible](https://plausible.io/docs) - Privacy-friendly analytics
+
+### Development Tools
+- [Prettier](https://prettier.io/docs/en/) - Code formatter
+- [ESLint](https://eslint.org/docs/latest/) - JavaScript linter
 
 ## Cloning & running
 
@@ -27,11 +49,10 @@
 
 ## Future Tasks
 
-- [ ] Add a share & copy buttons that folks can click on after convos are generated
-- [ ] Add potential follow up questions + new chat at the end of chat page
-- [ ] Split the page into two pages and add back the footer
-- [ ] Move all my icons into their own typescript file (transform.tools)
-- [ ] Add a more detailed landing page with a nice section with the GitHub link
-- [ ] Add nice hamburger menu on mobile
-- [ ] Try out the generative UI stuff from Vercel
-- [ ] Add a nicer dropdown overall
+- [ ] Add file upload functionality with drag & drop support
+- [ ] Implement OCR capabilities and searchable file content
+- [ ] Add theme customization (dark/light mode + custom colors)
+- [ ] Set up testing infrastructure
+  - [ ] Unit tests with Jest/Vitest
+  - [ ] E2E tests with Playwright/Cypress
+  - [ ] Set up GitHub Actions for CI pipeline
