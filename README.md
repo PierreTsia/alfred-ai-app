@@ -1,40 +1,52 @@
-<a href="https://www.llamatutor.com">
-  <img alt="Llama Tutor" src="./public/og-image.png">
-  <h1 align="center">Llama Tutor</h1>
-</a>
+<div align="center">
+  <h1>N.C3 <em style="font-size: 0.4em">(nice /naɪs/)</em> starter template</h1>
+  <p>A modern full-stack template that's nice to work with 😉</p>
+</div>
 
-<p align="center">
-  An open source AI personal tutor. Powered by Llama 3 70B & Together.ai
-</p>
+## What's N.C3?
+
+N.C3 is a carefully curated stack that combines powerful modern technologies:
+
+- **N**ext.js 14 - React framework with App Router
+- **C**lerk - Authentication & User Management
+- **C**onvex - Backend & Real-time Database
+- **C**ursor AI - AI-powered Development
 
 ## Tech Stack
 
 ### AI & Machine Learning
+
 - [Together AI](https://docs.together.ai/) - LLM inference platform
 - [Llama 3.1 70B](https://ai.meta.com/llama/) - Large Language Model from Meta
 
 ### Framework & Core
+
 - [Next.js 14](https://nextjs.org/docs) - React framework with App Router
 - [TypeScript](https://www.typescriptlang.org/docs/) - Type-safe JavaScript
 - [Tailwind CSS](https://tailwindcss.com/docs) - Utility-first CSS framework
 
 ### Authentication & User Management
+
 - [Clerk](https://clerk.com/docs) - Authentication and user management
 
 ### UI Components & Styling
+
 - [shadcn/ui](https://ui.shadcn.com/docs) - Re-usable components built with Radix UI and Tailwind
 - [Lucide Icons](https://lucide.dev/docs/lucide-react) - Beautiful open-source icons
 
 ### Data & API
+
 - [Convex](https://docs.convex.dev/) - Backend platform and real-time database
 - [Zod](https://zod.dev/) - TypeScript-first schema validation
 
 ### Search & Analytics
+
 - [SERP API](https://serper.dev/) - Search engine results API
 - [Helicone](https://docs.helicone.ai/) - LLM observability platform
 - [Plausible](https://plausible.io/docs) - Privacy-friendly analytics
 
 ### Development Tools
+
 - [Prettier](https://prettier.io/docs/en/) - Code formatter
 - [ESLint](https://eslint.org/docs/latest/) - JavaScript linter
 

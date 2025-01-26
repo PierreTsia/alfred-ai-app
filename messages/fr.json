@@ -1,7 +1,21 @@
 {
   "HomePage": {
-    "title": "Bonjour monde!",
-    "subtitle": "Démonstration d'Authentification, Localisation et Persistance",
+    "title": {
+      "main": "Template de Démarrage"
+    },
+    "subtitle": "Une modeste tentative du N.C3 Stack : Next.js, Clerk, Convex, et Cursor AI",
+    "techStack": {
+      "title": "Construit avec :",
+      "items": {
+        "nextjs": "Next.js 14",
+        "clerk": "Clerk Auth",
+        "convex": "Convex DB",
+        "shadcn": "shadcn/ui",
+        "together": "Together AI"
+      },
+      "assembledWith": "Assemblé avec",
+      "and": "et"
+    },
     "auth": {
       "title": "Authentification",
       "signInPrompt": "Connectez-vous consulter votre profile",
@@ -29,6 +43,15 @@
         "task": "Créer une nouvelle tâche",
         "list": "Voir toutes les tâches"
       }
+    },
+    "navigation": {
+      "profile": "Profil",
+      "storage": "Stockage",
+      "settings": "Paramètres"
+    },
+    "storage": {
+      "title": "Stockage",
+      "signInPrompt": "Connectez-vous pour gérer vos tâches et fichiers"
     }
   },
   "UserProfile": {

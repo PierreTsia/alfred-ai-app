@@ -9,11 +9,12 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
-let title = "Llama Tutor – AI Personal Tutor";
-let description = "Learn faster with our open source AI personal tutor";
-let url = "https://llamatutor.com/";
-let ogimage = "https://llamatutor.together.ai/og-image.png";
-let sitename = "llamatutor.com";
+let title = "N.C3 Stack – Modern Full-Stack Template";
+let description =
+  "A modern full-stack template that's nice to work with, powered by Next.js, Clerk, Convex, and Cursor AI";
+let url = "https://alfred-ai-app.vercel.app/";
+let ogimage = "https://alfred-ai-app.vercel.app/og-image.png";
+let sitename = "alfred-ai-app.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),

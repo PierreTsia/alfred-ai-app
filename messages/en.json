@@ -1,7 +1,23 @@
 {
   "HomePage": {
-    "title": "Hello world!",
-    "subtitle": "Demonstrating Auth, Localization, and Persistence",
+    "title": {
+      "main": "Starter Template"
+    },
+    "subtitle": "A humble attempt at the N.C3 Stack: Next.js, Clerk, Convex, and Cursor AI",
+    "techStack": {
+      "title": "Built with:",
+      "items": {
+        "nextjs": "Next.js 14",
+        "clerk": "Clerk Auth",
+        "convex": "Convex DB",
+        "shadcn": "shadcn/ui",
+        "tailwind": "Tailwind CSS",
+        "typescript": "TypeScript",
+        "together": "Together AI"
+      },
+      "assembledWith": "Assembled with",
+      "and": "and"
+    },
     "auth": {
       "title": "Authentication",
       "signInPrompt": "Sign in to view your profile",
@@ -13,9 +29,14 @@
       "switchPrompt": "Switch between available languages:",
       "currentLabel": "Current Language"
     },
-    "persistence": {
-      "title": "Persistence",
-      "signInPrompt": "Sign in to manage your tasks"
+    "navigation": {
+      "profile": "Profile",
+      "storage": "Storage",
+      "settings": "Settings"
+    },
+    "storage": {
+      "title": "Storage",
+      "signInPrompt": "Sign in to manage your tasks and files"
     },
     "chat": {
       "title": "Your AI Learning Assistant",

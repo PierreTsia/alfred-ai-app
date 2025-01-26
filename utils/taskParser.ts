@@ -17,9 +17,7 @@ export const parseTaskProposal = (message: string): TaskProposal | null => {
           .replace(/,(\s*[}\]])/g, "$1") // Remove trailing commas
           .trim();
 
-
         const parsed = JSON.parse(cleanJson);
-
 
         if (parsed.actionable?.taskProposal) {
           return parsed.actionable.taskProposal;
