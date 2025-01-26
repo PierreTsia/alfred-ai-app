@@ -79,7 +79,7 @@ export default function Home() {
                 </span>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="text-sm">yes, it reads "nice" 😉</p>
+                <p className="text-sm">yes, it reads &ldquo;nice&rdquo; 😉</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
