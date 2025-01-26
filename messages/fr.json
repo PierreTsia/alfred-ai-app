@@ -49,7 +49,11 @@
     "startPrompt": "Interrogez vos tâches ou commencez à apprendre...",
     "messagePlaceholder": "Tapez votre message ou interrogez vos tâches...",
     "assistantAvatar": "Avatar de l'Assistant IA",
-    "taskCreated": "✅ Tâche créée avec succès !"
+    "taskCreated": "✅ Tâche créée avec succès !",
+    "emptyState": {
+      "title": "Démarrer une conversation",
+      "description": "Commencez votre conversation en tapant un message ci-dessous. Posez des questions, partagez vos réflexions ou lancez une discussion."
+    }
   },
   "TaskProposal": {
     "title": "Proposition de Tâche",

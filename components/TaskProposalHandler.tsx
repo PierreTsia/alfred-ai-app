@@ -12,14 +12,23 @@ interface TaskProposalHandlerProps {
   >;
 }
 
-export const TaskProposalHandler = ({
+export function TaskProposalHandler({
   message,
   index,
   messages,
   setMessages,
-}: TaskProposalHandlerProps) => {
+}: TaskProposalHandlerProps) {
   const t = useTranslations("Chat");
   const taskProposal = parseTaskProposal(message.content);
+
+  const handleConfirmClick = () => {
+    const updatedMessages = [...messages];
+    updatedMessages[index] = {
+      ...message,
+      content: `${extractJsonFromResponseText(message.content)}\n\n${t("taskCreated")}`,
+    };
+    setMessages(updatedMessages);
+  };
 
   if (!taskProposal) {
     return null;
@@ -28,16 +37,7 @@ export const TaskProposalHandler = ({
   return (
     <TaskProposalConfirm
       proposal={taskProposal}
-      onConfirm={() => {
-        const updatedMessages = [...messages];
-        updatedMessages[index] = {
-          ...message,
-          content:
-            extractJsonFromResponseText(message.content) +
-            `\n\n${t("taskCreated")}`,
-        };
-        setMessages(updatedMessages);
-      }}
+      onConfirm={handleConfirmClick}
     />
   );
-};
+}

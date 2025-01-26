@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { TaskProposalHandler } from "./TaskProposalHandler";
 import { AgentMessage } from "./AgentMessage";
 import { UserMessage } from "./UserMessage";
+import { ChatEmptyState } from "./ChatEmptyState";
 
 export default function Chat({
   messages,
@@ -32,9 +33,10 @@ export default function Chat({
   const scrollableContainerRef = useRef<HTMLDivElement>(null);
   const [didScrollToBottom, setDidScrollToBottom] = useState(true);
   const t = useTranslations("Chat");
-  function scrollToBottom() {
+
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
-  }
+  };
 
   useEffect(() => {
     if (didScrollToBottom) {
@@ -76,7 +78,7 @@ export default function Chat({
           ref={scrollableContainerRef}
           className="mt-2 overflow-y-scroll rounded-lg border border-solid border-[#C2C2C2] bg-white px-5 lg:p-7"
         >
-          {messages.length > 0 ? (
+          {messages.length ? (
             <div className="prose-sm max-w-5xl lg:prose lg:max-w-full">
               {messages.map((message, index) =>
                 message.role === "assistant" ? (
@@ -95,15 +97,7 @@ export default function Chat({
               <div ref={messagesEndRef} />
             </div>
           ) : (
-            <div className="flex w-full flex-col gap-2 py-3">
-              {Array.from(Array(4).keys()).map((i) => (
-                <div
-                  key={i}
-                  className={`${i < 2 && "hidden sm:block"} bg-gray-300 h-6 animate-pulse rounded-md`}
-                  style={{ animationDelay: `${i * 0.05}s` }}
-                />
-              ))}
-            </div>
+            <ChatEmptyState />
           )}
         </div>
       </div>

@@ -48,7 +48,11 @@
     "startPrompt": "Ask about your tasks or start learning...",
     "messagePlaceholder": "Type your message or ask about your tasks...",
     "assistantAvatar": "AI Assistant Avatar",
-    "taskCreated": "✅ Task created successfully!"
+    "taskCreated": "✅ Task created successfully!",
+    "emptyState": {
+      "title": "Start a conversation",
+      "description": "Begin your chat by typing a message below. Ask questions, share thoughts, or start a discussion."
+    }
   },
   "TaskProposal": {
     "title": "New Task Proposal",
