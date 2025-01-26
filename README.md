@@ -68,3 +68,37 @@ N.C3 is a carefully curated stack that combines powerful modern technologies:
   - [ ] Unit tests with Jest/Vitest
   - [ ] E2E tests with Playwright/Cypress
   - [ ] Set up GitHub Actions for CI pipeline
+
+## Project Architecture
+
+This project follows a feature-first architecture with clear separation of concerns:
+
+```bash
+/
+├── app/              # Next.js App Router routes and layouts
+├── core/            # Core application code
+│   ├── config/      # App-wide configuration (i18n, etc.)
+│   ├── types/       # Shared TypeScript types
+│   └── utils/       # Core business utilities
+├── features/        # Feature modules
+│   ├── chat/
+│   ├── tasks/
+│   └── files/
+├── lib/             # Shared libraries
+│   └── utils/       # UI utilities (shadcn)
+├── components/      # Shared UI components
+│   ├── ui/          # shadcn components
+│   └── shared/      # app-wide components
+├── hooks/          # Shared React hooks
+├── public/         # Static assets
+└── messages/       # i18n translation files
+```
+
+### Key Decisions
+- Feature-first organization following domain-driven design
+- Core business logic separated from UI utilities
+- Convex handles all data operations (no services layer needed)
+- UI utilities follow shadcn conventions in `lib/utils`
+- Shared components split between shadcn and custom components
+
+For detailed architecture guidelines, see [ARCHITECTURE.md](./ARCHITECTURE.md).
