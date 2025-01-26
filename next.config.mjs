@@ -1,7 +1,7 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin(
-  './app/i18n/request.ts'  // Point to the new location
+  './core/config/i18n/request.ts'  // Updated path
 );
 
 /** @type {import('next').NextConfig} */
