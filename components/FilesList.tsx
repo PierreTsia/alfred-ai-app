@@ -1,4 +1,4 @@
-import { FileIcon, PlusCircle, Upload, X } from "lucide-react";
+import { FileIcon, PlusCircle, Upload, X, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { formatFileSize } from "@/utils/fileUtils";
@@ -7,7 +7,8 @@ import { z } from "zod";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
-import { log } from "console";
+import { Id } from "@/convex/_generated/dataModel";
+import { formatDate, formatDisplayDate } from "@/utils/dateUtils";
 
 const ACCEPTED_FILE_TYPES = {
   "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -33,22 +34,13 @@ const FileSchema = z.object({
   size: z.number().max(5 * 1024 * 1024, "File size must be less than 5MB"),
 });
 
-// Type for files from Convex DB
-type StoredFile = {
-  storageId: string;
-  name: string;
-  size: number;
-  userId: string;
-  uploadedAt: number;
-};
-
 // Type for UI representation
 type FileItem = {
   id: string;
   name: string;
   size: string;
   uploadedAt: string;
-  file: File;
+  file?: File;
   status: "uploaded" | "draft";
 };
 
@@ -56,6 +48,7 @@ const FilesList = () => {
   const { user } = useUser();
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const saveFile = useMutation(api.files.saveFile);
+  const removeFile = useMutation(api.files.removeFile);
   const storedFiles = useQuery(api.files.listFiles, {
     userId: user?.id ?? "",
   });
@@ -65,14 +58,61 @@ const FilesList = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("HomePage");
 
-  // Combine stored files and draft files
+  // Add loading states
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+
+  // Split file handling functions
+  const uploadToStorage = async (file: File): Promise<string> => {
+    const url = await generateUploadUrl();
+    const storageId = url.split("?")[0];
+    await uploadSingleFile(file, url);
+    return storageId;
+  };
+
+  const saveFileToDb = async (
+    file: File,
+    storageId: string,
+    userId: string,
+  ): Promise<void> => {
+    await saveFile({
+      storageId,
+      name: file.name,
+      size: file.size,
+      userId,
+    });
+  };
+
+  const removeDraftFile = (draftId: string) => {
+    setDraftFiles((prev) => prev.filter((f) => f.id !== draftId));
+  };
+
+  const handleUploadFiles = async () => {
+    if (!user) return;
+    setIsUploading(true);
+
+    try {
+      for (const draftFile of draftFiles) {
+        if (!draftFile.file) continue;
+
+        const storageId = await uploadToStorage(draftFile.file);
+        await saveFileToDb(draftFile.file, storageId, user.id);
+        removeDraftFile(draftFile.id);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Update file list mapping
   const allFiles: FileItem[] = [
     ...(storedFiles?.map((file) => ({
       id: file._id.toString(),
       name: file.name,
       size: formatFileSize(file.size),
-      uploadedAt: new Date(file.uploadedAt).toISOString(),
-      file: new File([], file.name), // Placeholder file object
+      uploadedAt: formatDate(file.uploadedAt),
       status: "uploaded" as const,
     })) ?? []),
     ...draftFiles,
@@ -120,42 +160,35 @@ const FilesList = () => {
     setDraftFiles((prev) => prev.filter((file) => file.id !== id));
   };
 
-  const handleUploadFiles = async () => {
-    if (!user) return;
+  // Split handleUploadFiles into smaller functions
+  const uploadSingleFile = async (file: File, url: string) => {
+    const result = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": file.type },
+      body: file,
+    });
 
-    for (const file of draftFiles) {
-      try {
-        const url = await generateUploadUrl();
-
-        const result = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": file.file.type },
-          body: file.file,
-        });
-
-        if (!result.ok) {
-          if (result.status === 429) {
-            console.error(
-              "Rate limit exceeded. Please wait a moment before retrying.",
-            );
-            return;
-          }
-          console.error(`Failed to upload ${file.name}: ${result.statusText}`);
-          continue;
-        }
-
-        await saveFile({
-          storageId: url,
-          name: file.name,
-          size: file.file.size,
-          userId: user.id,
-        });
-
-        // Remove this file from drafts after successful upload
-        setDraftFiles((prev) => prev.filter((f) => f.id !== file.id));
-      } catch (error) {
-        console.error(`Error uploading ${file.name}:`, error);
+    if (!result.ok) {
+      if (result.status === 429) {
+        throw new Error(t("storage.files.rateLimitError"));
       }
+      throw new Error(
+        `${t("storage.files.uploadError")}: ${result.statusText}`,
+      );
+    }
+  };
+
+  const handleRemoveFile = async (fileId: Id<"files">) => {
+    if (!user) return;
+    setIsDeleting(fileId);
+
+    try {
+      await removeFile({ id: fileId, userId: user.id });
+    } catch (error) {
+      console.error("Delete error:", error);
+      // TODO: Add toast notification
+    } finally {
+      setIsDeleting(null);
     }
   };
 
@@ -196,11 +229,11 @@ const FilesList = () => {
               <p className="text-sm text-muted-foreground">
                 {file.status === "draft"
                   ? t("storage.files.pendingUpload")
-                  : new Date(file.uploadedAt).toLocaleDateString()}{" "}
+                  : formatDisplayDate(file.uploadedAt)}{" "}
                 · {file.size}
               </p>
             </div>
-            {file.status === "draft" && (
+            {file.status === "draft" ? (
               <Button
                 variant="ghost"
                 size="icon"
@@ -208,6 +241,18 @@ const FilesList = () => {
                 onClick={() => handleRemoveDraft(file.id)}
               >
                 <X className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-500 h-8 w-8 flex-shrink-0 hover:text-red-500"
+                onClick={() => handleRemoveFile(file.id as Id<"files">)}
+                disabled={isDeleting === file.id}
+              >
+                <Trash2
+                  className={`h-4 w-4 ${isDeleting === file.id ? "animate-spin" : ""}`}
+                />
               </Button>
             )}
           </div>

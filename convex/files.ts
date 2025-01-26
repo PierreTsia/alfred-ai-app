@@ -39,3 +39,19 @@ export const listFiles = query({
       .collect();
   },
 });
+
+export const removeFile = mutation({
+  args: {
+    id: v.id("files"),
+    userId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const file = await ctx.db.get(args.id);
+    if (!file || file.userId !== args.userId) {
+      throw new Error("Not authorized to delete this file");
+    }
+    
+    // Just remove from database for now
+    await ctx.db.delete(args.id);
+  },
+});
