@@ -20,4 +20,4 @@ export type SystemPromptParams = {
   tasksContext?: string;
   ageGroup?: string;
   teachingContent?: { fullContent: string }[];
-};
+}; 

@@ -1,4 +1,4 @@
-import { SystemPromptType, SystemPromptParams } from "@/types";
+import { SystemPromptType, SystemPromptParams } from "@/core/types";
 
 export const getSystemPrompt = (
   type: SystemPromptType,

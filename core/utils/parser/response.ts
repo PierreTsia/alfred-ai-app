@@ -1,4 +1,4 @@
-import { ActionableResponse } from "@/types";
+import { ActionableResponse } from "@/core/types";
 
 const highlightCommands = (text: string): string => {
   // Task creation commands
