@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-export default function ChatHeader() {
+const ChatHeader = () => {
   const t = useTranslations("HomePage");
 
   return (
@@ -31,4 +31,6 @@ export default function ChatHeader() {
       </div>
     </div>
   );
-}
+};
+
+export default ChatHeader;

@@ -1,15 +1,15 @@
 "use client";
 
-import FinalInputArea from "./FinalInputArea";
+import FinalInputArea from "@/components/FinalInputArea";
 import { useEffect, useRef, useState } from "react";
 
 import { processCommandInput } from "@/utils/commands";
 import { useTranslations } from "next-intl";
-import { TaskProposalHandler } from "./TaskProposalHandler";
-import { AgentMessage } from "./AgentMessage";
-import { UserMessage } from "./UserMessage";
+import { TaskProposalHandler } from "@/components/TaskProposalHandler";
+import { AgentMessage } from "@/components/AgentMessage";
+import { UserMessage } from "@/components/UserMessage";
 import { ChatEmptyState } from "./ChatEmptyState";
-import { TaskListHandler } from "./TaskListHandler";
+import { TaskListHandler } from "@/components/TaskListHandler";
 
 export default function Chat({
   messages,

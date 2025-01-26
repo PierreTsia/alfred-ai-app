@@ -5,17 +5,11 @@ import { useTranslations } from "next-intl";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { useLocale } from "next-intl";
 import TaskList from "@/components/TaskList";
-import {
-  SignOutButton,
-  SignInButton,
-  useAuth,
-  SignedIn,
-  SignedOut,
-} from "@clerk/nextjs";
+import { SignOutButton, SignInButton } from "@clerk/nextjs";
 import UserInfoCard from "@/components/UserInfoCard";
 import AIChatClient from "@/components/AIChatClient";
 import { Button } from "@/components/ui/button";
-import ChatHeader from "@/components/ChatHeader";
+import ChatHeader from "@/features/chat/components/ChatHeader";
 import { User, HardDrive, Settings, ExternalLink, Heart } from "lucide-react";
 import Link from "next/link";
 import {
@@ -31,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { FileIcon } from "lucide-react";
 import FilesList from "@/components/FilesList";
 import AuthenticatedSection from "@/components/AuthenticatedSection";
+import Chat from "@/features/chat/components/Chat";
 
 const TECH_STACK = [
   {

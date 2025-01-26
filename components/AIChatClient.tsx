@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Chat from "./Chat";
+import Chat from "@/features/chat/components/Chat";
 import {
   createParser,
   ParsedEvent,
