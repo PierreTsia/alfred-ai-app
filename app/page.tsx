@@ -7,7 +7,7 @@ import { useLocale } from "next-intl";
 import TaskList from "@/components/TaskList";
 import { SignOutButton, SignInButton } from "@clerk/nextjs";
 import UserInfoCard from "@/components/UserInfoCard";
-import AIChatClient from "@/components/AIChatClient";
+import ChatAiClient from "@/features/chat/components/ChatAiClient";
 import { Button } from "@/components/ui/button";
 import ChatHeader from "@/features/chat/components/ChatHeader";
 import { User, HardDrive, Settings, ExternalLink, Heart } from "lucide-react";
@@ -217,7 +217,7 @@ export default function Home() {
           <div className="to-gray-50/50 flex flex-col gap-4 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
             <ChatHeader />
             <div className="flex-1 overflow-hidden">
-              <AIChatClient />
+              <ChatAiClient />
             </div>
           </div>
         </AuthenticatedSection>

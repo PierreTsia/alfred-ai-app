@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Chat from "@/features/chat/components/Chat";
+import Chat from "./Chat";
 import {
   createParser,
   ParsedEvent,
@@ -9,7 +9,7 @@ import {
 } from "eventsource-parser";
 import { useUser } from "@clerk/nextjs";
 
-export default function AIChatClient() {
+export default function ChatAiClient() {
   const { user } = useUser();
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
     [],
