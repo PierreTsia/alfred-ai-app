@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { processCommandInput } from "@/utils/commands";
+import { processCommandInput } from "@/core/utils/commands";
 import { useTranslations } from "next-intl";
 import { TaskProposalHandler } from "@/features/tasks/components/TaskProposalHandler";
 import { ChatAgentMessage } from "@/features/chat/components/ChatAgentMessage";

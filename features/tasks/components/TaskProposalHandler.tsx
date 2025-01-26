@@ -1,5 +1,5 @@
-import { parseTaskProposal } from "@/utils/taskParser";
-import { extractJsonFromResponseText } from "@/utils/responseParser";
+import { parseTaskProposal } from "@/core/utils/parser/task";
+import { extractJsonFromResponseText } from "@/core/utils/parser/response";
 import { TaskProposalConfirm } from "../../chat/components/TaskProposalConfirm";
 import { useTranslations } from "next-intl";
 

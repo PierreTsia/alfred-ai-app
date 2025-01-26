@@ -1,14 +1,14 @@
 import { FileIcon, PlusCircle, Upload, X, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
-import { formatFileSize } from "@/utils/fileUtils";
+import { formatFileSize } from "@/core/utils/files"
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
-import { formatDate, formatDisplayDate } from "@/utils/dateUtils";
+import { formatDate, formatDisplayDate } from "@/core/utils/date";
 
 const ACCEPTED_FILE_TYPES = {
   "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"],

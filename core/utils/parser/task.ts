@@ -10,7 +10,6 @@ export const parseTaskProposal = (message: string): TaskProposal | null => {
     // Try each matched JSON object
     for (const jsonString of matches) {
       try {
-        // Clean up the JSON string
         const cleanJson = jsonString
           .replace(/\/\/.*$/gm, "") // Remove single line comments
           .replace(/\/\*[\s\S]*?\*\//gm, "") // Remove multi-line comments
@@ -36,10 +35,9 @@ export const parseTaskProposal = (message: string): TaskProposal | null => {
         continue;
       }
     }
-
     return null;
   } catch (e) {
     console.log("Parse error:", e);
     return null;
   }
-};
+}; 

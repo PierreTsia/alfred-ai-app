@@ -1,10 +1,10 @@
 import {
   togetherAIStream,
   TogetherAIStreamPayload,
-} from "@/utils/togetherAIStream";
+} from "@/lib/api/together-ai-stream";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
-import { getSystemPrompt } from "@/utils/prompts";
+import { getSystemPrompt } from "@/core/utils/prompts";
 
 export const maxDuration = 60;
 

@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { formatUserInput } from "@/utils/responseParser";
+import { formatUserInput } from "@/core/utils/parser/response";
 
 type ChatUserMessageProps = {
   content: string;

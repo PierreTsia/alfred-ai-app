@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 export const extractJsonFromResponseText = (text: string): string => {
   try {
     const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);

@@ -2,7 +2,7 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import { useTranslations } from "next-intl";
 import simpleLogo from "../../../public/simple-logo.png";
-import { extractJsonFromResponseText } from "@/utils/responseParser";
+import { extractJsonFromResponseText } from "@/core/utils/parser/response";
 
 interface ChatAgentMessageProps {
   content: string;
