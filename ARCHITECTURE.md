@@ -19,15 +19,15 @@ This document outlines the directory structure and organization of the NC3 Stack
 │   ├── tasks/
 │   │   ├── components/
 │   │   ├── hooks/
-│   │   └── services/
+│   │   └── services/    # Not needed - using Convex mutations/queries
 │   ├── files/
 │   │   ├── components/
 │   │   ├── hooks/
-│   │   └── services/
+│   │   └── services/    # Not needed - using Convex mutations/queries
 │   └── chat/
 │       ├── components/
 │       ├── hooks/
-│       └── services/
+│       └── services/    # Not needed - using Convex mutations/queries
 ├── lib/
 │   ├── api/
 │   └── utils/
@@ -35,7 +35,7 @@ This document outlines the directory structure and organization of the NC3 Stack
 │   ├── ui/        # shadcn components
 │   └── shared/    # truly shared components
 ├── hooks/         # shared hooks
-├── services/      # shared services
+├── services/      # Not needed - feature-specific logic lives in Convex
 ├── public/        # static assets
 └── messages/      # i18n files
 ```
