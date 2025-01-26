@@ -1,10 +1,11 @@
 import { FC, KeyboardEvent } from "react";
-import TypeAnimation from "./TypeAnimation";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUpIcon } from "lucide-react";
+import ChatLoadingDots from "@/features/chat/components/ChatLoadingDots";
 
-type TInputAreaProps = {
+type ChatInputProps = {
   promptValue: string;
   setPromptValue: React.Dispatch<React.SetStateAction<string>>;
   disabled?: boolean;
@@ -15,7 +16,7 @@ type TInputAreaProps = {
   handleChat: (messages?: { role: string; content: string }[]) => void;
 };
 
-const FinalInputArea: FC<TInputAreaProps> = ({
+const ChatInput: FC<ChatInputProps> = ({
   promptValue,
   setPromptValue,
   disabled,
@@ -50,7 +51,7 @@ const FinalInputArea: FC<TInputAreaProps> = ({
       }}
     >
       <Textarea
-        placeholder="Follow up question"
+        placeholder="Ask a question or type a command"
         className="min-h-[60px] resize-none"
         disabled={disabled}
         value={promptValue}
@@ -65,10 +66,10 @@ const FinalInputArea: FC<TInputAreaProps> = ({
         size="icon"
         className="h-[60px] w-[60px] shrink-0 bg-blue-600 hover:bg-blue-700"
       >
-        {disabled ? <TypeAnimation /> : <ArrowUpIcon className="h-5 w-5" />}
+        {disabled ? <ChatLoadingDots /> : <ArrowUpIcon className="h-5 w-5" />}
       </Button>
     </form>
   );
 };
 
-export default FinalInputArea;
+export default ChatInput;

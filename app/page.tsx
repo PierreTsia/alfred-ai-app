@@ -2,11 +2,10 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
+import LocaleSwitcher from "@/core/components/LocaleSwitcher";
 import { useLocale } from "next-intl";
-import TaskList from "@/components/TaskList";
+import TaskList from "@/features/tasks/components/TaskList";
 import { SignOutButton, SignInButton } from "@clerk/nextjs";
-import UserInfoCard from "@/components/UserInfoCard";
 import ChatAiClient from "@/features/chat/components/ChatAiClient";
 import { Button } from "@/components/ui/button";
 import ChatHeader from "@/features/chat/components/ChatHeader";
@@ -18,14 +17,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { TechnologyBadge } from "@/components/TechnologyBadge";
+
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { FileIcon } from "lucide-react";
-import FilesList from "@/components/FilesList";
-import AuthenticatedSection from "@/components/AuthenticatedSection";
+import FilesList from "@/features/files/components/FilesList";
+
+import AuthenticatedSection from "@/core/components/AuthenticatedSection";
+import LinkBadge from "@/components/shared/LinkBadge";
 import Chat from "@/features/chat/components/Chat";
+import UserProfileCard from "@/features/users/components/UserProfileCard";
 
 const TECH_STACK = [
   {
@@ -91,7 +93,7 @@ export default function Home() {
         <div className="mt-6 flex flex-col items-center gap-4">
           <div className="flex flex-wrap justify-center gap-3">
             {TECH_STACK.map((tech) => (
-              <TechnologyBadge
+              <LinkBadge
                 key={tech.href}
                 name={t(`techStack.items.${tech.name}`)}
                 href={tech.href}
@@ -104,13 +106,11 @@ export default function Home() {
             {t("techStack.assembledWith")}
             <Heart className="h-4 w-4 fill-red-500 text-red-500" />
             {t("techStack.and")}
-            <Link
+            <LinkBadge
+              name="Cursor AI"
               href="https://cursor.sh"
-              target="_blank"
-              className="inline-flex items-center gap-1 rounded-lg bg-blue-100 px-2 py-0.5 text-blue-700 hover:bg-blue-200"
-            >
-              Cursor AI <ExternalLink className="h-3 w-3" />
-            </Link>
+              className="bg-indigo-600 px-2 py-0.5 text-white hover:bg-indigo-700"
+            />
           </p>
         </div>
       </div>
@@ -142,7 +142,7 @@ export default function Home() {
               }
             >
               <div className="flex flex-col items-center gap-4">
-                <UserInfoCard />
+                <UserProfileCard />
                 <SignOutButton>
                   <Button variant="outline" className="w-[180px]">
                     {t("auth.signOutButton")}

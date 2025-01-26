@@ -1,15 +1,15 @@
 "use client";
 
-import FinalInputArea from "@/components/FinalInputArea";
 import { useEffect, useRef, useState } from "react";
 
 import { processCommandInput } from "@/utils/commands";
 import { useTranslations } from "next-intl";
-import { TaskProposalHandler } from "@/components/TaskProposalHandler";
-import { ChatAgentMessage } from "./ChatAgentMessage";
-import { UserMessage } from "@/components/UserMessage";
-import { ChatEmptyState } from "./ChatEmptyState";
-import { TaskListHandler } from "@/components/TaskListHandler";
+import { TaskProposalHandler } from "@/features/tasks/components/TaskProposalHandler";
+import { ChatAgentMessage } from "@/features/chat/components/ChatAgentMessage";
+import ChatUserMessage from "@/features/chat/components/ChatUserMessage";
+import { ChatEmptyState } from "@/features/chat/components/ChatEmptyState";
+import { TaskListHandler } from "@/features/tasks/components/TaskListHandler";
+import ChatInput from "@/features/chat/components/ChatInput";
 
 export default function Chat({
   messages,
@@ -92,7 +92,7 @@ export default function Chat({
                     <TaskListHandler message={message} />
                   </ChatAgentMessage>
                 ) : (
-                  <UserMessage key={index} content={message.content} />
+                  <ChatUserMessage key={index} content={message.content} />
                 ),
               )}
               <div ref={messagesEndRef} />
@@ -104,7 +104,7 @@ export default function Chat({
       </div>
 
       <div className="bg-white lg:p-4">
-        <FinalInputArea
+        <ChatInput
           disabled={disabled}
           promptValue={promptValue}
           setPromptValue={setPromptValue}

@@ -4,4 +4,4 @@ export const formatDate = (timestamp: number): string => {
 
 export const formatDisplayDate = (date: string): string => {
   return new Date(date).toLocaleDateString();
-}; 
+};

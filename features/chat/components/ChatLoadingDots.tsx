@@ -1,4 +1,4 @@
-const TypeAnimation = () => {
+const ChatLoadingDots = () => {
   return (
     <div className="loader pb-1">
       <span></span>
@@ -8,4 +8,4 @@ const TypeAnimation = () => {
   );
 };
 
-export default TypeAnimation;
+export default ChatLoadingDots;

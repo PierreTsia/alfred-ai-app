@@ -1,6 +1,6 @@
 import { parseTaskProposal } from "@/utils/taskParser";
 import { extractJsonFromResponseText } from "@/utils/responseParser";
-import { TaskProposalConfirm } from "./TaskProposalConfirm";
+import { TaskProposalConfirm } from "../../chat/components/TaskProposalConfirm";
 import { useTranslations } from "next-intl";
 
 interface TaskProposalHandlerProps {

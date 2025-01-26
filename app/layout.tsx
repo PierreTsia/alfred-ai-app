@@ -3,7 +3,7 @@ import { Montserrat } from "next/font/google";
 import PlausibleProvider from "next-plausible";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { ConvexClientProvider } from "./ConvexClientProvider";
+import ConvexClientProvider from "@/core/providers/ConvexProvider";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 

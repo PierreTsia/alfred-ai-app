@@ -50,7 +50,7 @@ export const removeFile = mutation({
     if (!file || file.userId !== args.userId) {
       throw new Error("Not authorized to delete this file");
     }
-    
+
     // Just remove from database for now
     await ctx.db.delete(args.id);
   },

@@ -2,7 +2,7 @@
 
 This document outlines the directory structure and organization of the NC3 Stack project.
 
-## Directory Structure 
+## Directory Structure
 
 ```bash
 /

@@ -1,13 +1,13 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-interface TechnologyBadge {
+type LinkBadgeProps = {
   name: string;
   href: string;
   className: string;
-}
+};
 
-export function TechnologyBadge({ name, href, className }: TechnologyBadge) {
+const LinkBadge = ({ name, href, className }: LinkBadgeProps) => {
   return (
     <Link
       href={href}
@@ -17,4 +17,6 @@ export function TechnologyBadge({ name, href, className }: TechnologyBadge) {
       {name} <ExternalLink className="h-3 w-3" />
     </Link>
   );
-}
+};
+
+export default LinkBadge;

@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-export default function UserInfoCard() {
+export default function UserProfileCard() {
   const { isSignedIn, user } = useUser();
   const t = useTranslations("UserProfile");
 

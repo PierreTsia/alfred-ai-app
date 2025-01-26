@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Globe } from "lucide-react"; // You'll need to install lucide-react if not already installed
+import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function LocaleSwitcher({
@@ -19,14 +19,10 @@ export default function LocaleSwitcher({
 }) {
   const router = useRouter();
   const t = useTranslations("LocaleSwitcher");
-
   const [isPending, startTransition] = useTransition();
 
   const switchLocale = (newLocale: string) => {
-    // Set the cookie
     document.cookie = `locale=${newLocale};path=/`;
-
-    // Refresh the page to load new locale
     startTransition(() => {
       router.refresh();
     });
