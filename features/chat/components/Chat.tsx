@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { processCommandInput } from "@/utils/commands";
 import { useTranslations } from "next-intl";
 import { TaskProposalHandler } from "@/components/TaskProposalHandler";
-import { AgentMessage } from "@/components/AgentMessage";
+import { ChatAgentMessage } from "./ChatAgentMessage";
 import { UserMessage } from "@/components/UserMessage";
 import { ChatEmptyState } from "./ChatEmptyState";
 import { TaskListHandler } from "@/components/TaskListHandler";
@@ -82,7 +82,7 @@ export default function Chat({
             <div className="prose-sm max-w-5xl lg:prose lg:max-w-full">
               {messages.map((message, index) =>
                 message.role === "assistant" ? (
-                  <AgentMessage key={index} content={message.content}>
+                  <ChatAgentMessage key={index} content={message.content}>
                     <TaskProposalHandler
                       message={message}
                       index={index}
@@ -90,7 +90,7 @@ export default function Chat({
                       setMessages={setMessages}
                     />
                     <TaskListHandler message={message} />
-                  </AgentMessage>
+                  </ChatAgentMessage>
                 ) : (
                   <UserMessage key={index} content={message.content} />
                 ),
