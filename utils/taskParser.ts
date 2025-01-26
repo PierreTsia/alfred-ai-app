@@ -1,4 +1,3 @@
-
 import { TaskProposal } from "@/types";
 
 export const parseTaskProposal = (message: string): TaskProposal | null => {
@@ -18,7 +17,11 @@ export const parseTaskProposal = (message: string): TaskProposal | null => {
           .replace(/,(\s*[}\]])/g, "$1") // Remove trailing commas
           .trim();
 
+        console.log("Clean JSON:", cleanJson);
+
         const parsed = JSON.parse(cleanJson);
+
+        console.log("Parsed JSON:", parsed);
 
         if (parsed.actionable?.taskProposal) {
           return parsed.actionable.taskProposal;

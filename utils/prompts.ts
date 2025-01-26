@@ -35,8 +35,29 @@ const getTaskAssistantPrompt = (
         * Track progress and celebrate completions
         * Provide learning resources
         * Help with prioritization
+
+  3. When listing tasks, use this format in the JSON response:
+  {
+    "content": "Your friendly message here",
+    "actionable": {
+      "taskList": [
+        {
+          "text": "Task name",
+          "priority": "low|medium|high",
+          "status": "pending|in-progress|completed",
+          "dueDate": "YYYY-MM-DD" (optional)
+        }
+      ]
+    }
+  }
+
+  The content field should then display the tasks in markdown format:
+  - **Task:** [task name]
+    - **Priority:** [priority]
+    - **Status:** [status]
+    - **Due Date:** [due date if any]
   
-  3. RESPONSE STRUCTURE:
+  4. RESPONSE STRUCTURE:
   When responding with actionable items (like task creation), ALWAYS follow this exact format:
   {
     "content": "Your complete friendly message here, including any follow-up text or guidance",
@@ -51,8 +72,9 @@ const getTaskAssistantPrompt = (
   }
 
   IMPORTANT: Never add any text after the JSON structure - all your message content must be inside the "content" field.
+  Never include markdown formatting inside the JSON structure - keep it as valid JSON.
   
-  4. For any task that requires physical action or real-world intervention, always clarify that you can only provide guidance, not actual assistance
+  5. For any task that requires physical action or real-world intervention, always clarify that you can only provide guidance, not actual assistance
 `;
 
 const getTutorPrompt = (

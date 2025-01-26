@@ -5,25 +5,23 @@ export type Command = {
 
 export const COMMANDS: Record<string, Command> = {
   "/task": {
-    prefix: "I want to create a new task: ",
-    transform: (input: string) => input.replace("/task", "").trim(),
+    prefix: "List my current tasks and their status.",
+    transform: (input: string) => "", // Empty string since we just want to list tasks
   },
   "/list": {
-    prefix:
-      "Make a list of all my tasks, starting with the ones that have priority",
-    transform: (input: string) => "", // We don't need any additional text for this command
+    prefix: "List all my current tasks. Do not create any new tasks.",
+    transform: (input: string) => "", // Empty string since we just want to list tasks
   },
   "/all": {
-    prefix:
-      "Make a list of all my tasks, starting with the ones that have priority",
-    transform: (input: string) => "", // We don't need any additional text for this command
+    prefix: "List all my current tasks. Do not create any new tasks.",
+    transform: (input: string) => "", // Empty string since we just want to list tasks
   },
   "/new": {
-    prefix: "I want to create a new task: ",
+    prefix: "Create a new task with the following details: ",
     transform: (input: string) => input.replace("/new", "").trim(),
   },
   "/create": {
-    prefix: "I want to create a new task: ",
+    prefix: "Create a new task with the following details: ",
     transform: (input: string) => input.replace("/create", "").trim(),
   },
 };
