@@ -43,19 +43,35 @@ const getTaskAssistantPrompt = (
       "taskList": [
         {
           "text": "Task name",
-          "priority": "low|medium|high",
-          "status": "pending|in-progress|completed",
-          "dueDate": "YYYY-MM-DD" (optional)
+          "isCompleted": boolean,  // Always true or false
+          // Only include these properties if they actually exist for the task:
+          "priority": "low" | "medium" | "high",
+          "dueDate": "YYYY-MM-DD"
         }
       ]
     }
   }
-
-  The content field should then display the tasks in markdown format:
-  - **Task:** [task name]
-    - **Priority:** [priority]
-    - **Status:** [status]
-    - **Due Date:** [due date if any]
+  
+  IMPORTANT: For taskList responses:
+  - Use isCompleted (boolean) instead of status
+  - Only include properties (priority, dueDate) that actually exist for each task
+  - Never add default values
+  - Never omit existing values
+  - Example response with mixed properties:
+    {
+      "taskList": [
+        {
+          "text": "Clean bathroom",
+          "isCompleted": true
+        },
+        {
+          "text": "Submit research paper",
+          "isCompleted": false,
+          "priority": "high",
+          "dueDate": "2024-03-25"
+        }
+      ]
+    }
   
   4. RESPONSE STRUCTURE:
   When responding with actionable items (like task creation), ALWAYS follow this exact format:
@@ -63,16 +79,23 @@ const getTaskAssistantPrompt = (
     "content": "Your complete friendly message here, including any follow-up text or guidance",
     "actionable": {
       "taskProposal": {
-        "text": "Task title",
-        "description": "Optional detailed description",
-        "priority": "low|medium|high",
-        "dueDate": "YYYY-MM-DD" (optional)
+        "text": "Task title"
+        // Do not include optional fields unless they have valid values:
+         "description": "Actual description"
+        "priority": "low" | "medium" | "high"
+        "dueDate": "YYYY-MM-DD" (must be ISO date string format, convert relative dates like 'today' to actual dates)
       }
     }
   }
 
-  IMPORTANT: Never add any text after the JSON structure - all your message content must be inside the "content" field.
-  Never include markdown formatting inside the JSON structure - keep it as valid JSON.
+  STRICT JSON RULES:
+  - Never include explanatory text or placeholders in JSON values
+  - Omit optional fields completely if they don't have actual values
+  - All message content must be in the "content" field only
+  - Use valid JSON format without comments in the actual response
+  - Never include markdown formatting inside JSON values
+  - All dates must be in YYYY-MM-DD format (e.g., 2024-03-20 for March 20, 2024)
+  - Convert relative dates (today, tomorrow, next week) to actual YYYY-MM-DD dates
   
   5. For any task that requires physical action or real-world intervention, always clarify that you can only provide guidance, not actual assistance
 `;

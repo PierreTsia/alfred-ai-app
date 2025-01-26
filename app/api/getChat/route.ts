@@ -24,11 +24,13 @@ export async function POST(request: Request) {
         tasksContext = `Here are ${userName}'s current tasks:\n${tasks
           .map(
             (task, i) =>
-              `${i + 1}. ${task.text} (${task.isCompleted ? "completed" : "pending"}) - Priority: ${task.priority}, Created: ${new Date(task._creationTime).toLocaleDateString()}`,
+              `${i + 1}. ${task.text} (${task.isCompleted ? "completed" : "pending"})${task.priority ? ` - Priority: ${task.priority}` : ''}${task.dueDate ? `, Due: ${new Date(task.dueDate).toLocaleDateString()}` : ''}, Created: ${new Date(task._creationTime).toLocaleDateString()}`,
           )
           .join("\n")}`;
       }
     }
+
+    console.log("tasksContext", tasksContext);
 
     const payload: TogetherAIStreamPayload = {
       model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",

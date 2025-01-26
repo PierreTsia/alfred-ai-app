@@ -9,6 +9,7 @@ import { TaskProposalHandler } from "./TaskProposalHandler";
 import { AgentMessage } from "./AgentMessage";
 import { UserMessage } from "./UserMessage";
 import { ChatEmptyState } from "./ChatEmptyState";
+import { TaskListHandler } from "./TaskListHandler";
 
 export default function Chat({
   messages,
@@ -89,6 +90,7 @@ export default function Chat({
                       messages={messages}
                       setMessages={setMessages}
                     />
+                    <TaskListHandler message={message} />
                   </AgentMessage>
                 ) : (
                   <UserMessage key={index} content={message.content} />

@@ -53,6 +53,9 @@
     "emptyState": {
       "title": "Démarrer une conversation",
       "description": "Commencez votre conversation en tapant un message ci-dessous. Posez des questions, partagez vos réflexions ou lancez une discussion."
+    },
+    "taskList": {
+      "found": "{count, plural, =0 {Aucune tâche trouvée} one {# tâche trouvée} other {# tâches trouvées}}"
     }
   },
   "TaskProposal": {
