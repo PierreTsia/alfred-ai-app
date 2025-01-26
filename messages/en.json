@@ -38,7 +38,12 @@
       "title": "Storage",
       "signInPrompt": "Sign in to manage your tasks and files",
       "tasksTitle": "Tasks",
-      "filesTitle": "Files"
+      "filesTitle": "Files",
+      "files": {
+        "pendingUpload": "Pending upload",
+        "uploadButton": "Upload Files",
+        "addButton": "Add File"
+      }
     },
     "chat": {
       "title": "Your AI Learning Assistant",

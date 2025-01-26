@@ -68,7 +68,6 @@ export default function Chat({
 
   const handleSubmit = () => {
     const processedInput = processCommandInput(promptValue);
-    console.log("Processed input:", processedInput);
     handleChat(processedInput);
   };
 

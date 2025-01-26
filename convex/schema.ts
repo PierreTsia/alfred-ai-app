@@ -22,4 +22,12 @@ export default defineSchema({
     .index("by_creation", ["createdAt"])
     .index("by_user", ["userId"])
     .index("by_completion", ["isCompleted", "createdAt"]),
+
+  files: defineTable({
+    storageId: v.string(),
+    name: v.string(),
+    size: v.number(),
+    userId: v.string(),
+    uploadedAt: v.number(),
+  }),
 });

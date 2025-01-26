@@ -53,7 +53,12 @@
       "title": "Stockage",
       "signInPrompt": "Connectez-vous pour gérer vos tâches et fichiers",
       "tasksTitle": "Tâches",
-      "filesTitle": "Fichiers"
+      "filesTitle": "Fichiers",
+      "files": {
+        "pendingUpload": "En attente d'envoi",
+        "uploadButton": "Envoyer les fichiers",
+        "addButton": "Ajouter un fichier"
+      }
     },
     "profile": {
       "title": "Profil"

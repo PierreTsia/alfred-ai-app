@@ -49,9 +49,9 @@ export default function TaskList() {
   };
 
   return (
-    <div className="flex h-[350px] w-full flex-col">
+    <div className="flex h-[400px] flex-col">
       {/* Scrollable Tasks List */}
-      <div className="flex-1 overflow-y-auto pr-2">
+      <div className="flex-1 space-y-4 overflow-y-auto pr-2">
         <div className="space-y-2">
           {tasks?.map((task) => (
             <div
@@ -93,7 +93,7 @@ export default function TaskList() {
       </div>
 
       {/* Fixed Input Form at Bottom */}
-      <div className="mt-4 border-t pt-4">
+      <div className="mt-auto space-y-4 pt-6">
         <form onSubmit={handleAddTask} className="flex gap-2">
           <div className="min-w-0 flex-1">
             <Input
