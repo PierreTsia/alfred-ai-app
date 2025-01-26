@@ -36,7 +36,9 @@
     },
     "storage": {
       "title": "Storage",
-      "signInPrompt": "Sign in to manage your tasks and files"
+      "signInPrompt": "Sign in to manage your tasks and files",
+      "tasksTitle": "Tasks",
+      "filesTitle": "Files"
     },
     "chat": {
       "title": "Your AI Learning Assistant",
@@ -49,6 +51,9 @@
         "task": "Create a new task",
         "list": "View all tasks"
       }
+    },
+    "profile": {
+      "title": "Profile"
     }
   },
   "UserProfile": {

@@ -25,6 +25,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TechnologyBadge } from "@/components/TechnologyBadge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { FileIcon } from "lucide-react";
+import FilesList from "@/components/FilesList";
+import AuthenticatedSection from "@/components/AuthenticatedSection";
 
 const TECH_STACK = [
   {
@@ -62,8 +68,6 @@ const TECH_STACK = [
 export default function Home() {
   const t = useTranslations("HomePage");
   const locale = useLocale();
-  const { isSignedIn } = useAuth();
-
   return (
     <main className="container mx-auto min-h-screen px-4 py-8 lg:px-8 lg:py-12">
       <div className="mb-12 text-center">
@@ -134,38 +138,50 @@ export default function Home() {
           </TabsList>
 
           <TabsContent value="profile" className="space-y-4">
-            <div className="to-gray-50/50 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
-              <SignedIn>
+            <AuthenticatedSection
+              title={t("profile.title")}
+              fallback={
+                <div className="border-gray-200 text-gray-500 flex h-[350px] items-center justify-center rounded-lg border-2 border-dashed px-6 text-center">
+                  {t("auth.signInPrompt")}
+                </div>
+              }
+            >
+              <div className="flex flex-col items-center gap-4">
                 <UserInfoCard />
                 <SignOutButton>
                   <Button variant="outline" className="w-[180px]">
                     {t("auth.signOutButton")}
                   </Button>
                 </SignOutButton>
-              </SignedIn>
-              <SignedOut>
-                <div className="border-gray-200 text-gray-500 flex h-[350px] items-center justify-center rounded-lg border-2 border-dashed px-6 text-center">
-                  {t("auth.signInPrompt")}
-                </div>
-                <SignInButton>
-                  <Button variant="outline" className="w-[180px]">
-                    {t("auth.signInButton")}
-                  </Button>
-                </SignInButton>
-              </SignedOut>
-            </div>
+              </div>
+            </AuthenticatedSection>
           </TabsContent>
 
           <TabsContent value="storage" className="space-y-4">
-            <div className="to-gray-50/50 flex flex-col gap-4 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
-              <SignedIn>
-                <TaskList />
-              </SignedIn>
-              <SignedOut>
-                <div className="border-gray-200 text-gray-500 flex h-[350px] items-center justify-center rounded-lg border-2 border-dashed px-6 text-center">
-                  {t("storage.signInPrompt")}
-                </div>
-              </SignedOut>
+            <div className="to-gray-50/50 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <AuthenticatedSection
+                  title={t("storage.tasksTitle")}
+                  fallback={
+                    <div className="border-gray-200 text-gray-500 flex h-[350px] items-center justify-center rounded-lg border-2 border-dashed px-6 text-center">
+                      {t("storage.signInPrompt")}
+                    </div>
+                  }
+                >
+                  <TaskList />
+                </AuthenticatedSection>
+
+                <AuthenticatedSection
+                  title={t("storage.filesTitle")}
+                  fallback={
+                    <div className="border-gray-200 text-gray-500 flex h-[350px] items-center justify-center rounded-lg border-2 border-dashed px-6 text-center">
+                      {t("storage.signInPrompt")}
+                    </div>
+                  }
+                >
+                  <FilesList />
+                </AuthenticatedSection>
+              </div>
             </div>
           </TabsContent>
 
@@ -189,14 +205,10 @@ export default function Home() {
       </div>
 
       <div className="mt-8">
-        <div className="to-gray-50/50 flex flex-col gap-4 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
-          <ChatHeader />
-          <SignedIn>
-            <div className="flex-1 overflow-hidden">
-              <AIChatClient />
-            </div>
-          </SignedIn>
-          <SignedOut>
+        <AuthenticatedSection
+          title={t("chat.title")}
+          className="min-h-0"
+          fallback={
             <div className="flex flex-col items-center gap-4 py-8">
               <p className="text-center text-muted-foreground">
                 {t("chat.signInPrompt")}
@@ -205,8 +217,15 @@ export default function Home() {
                 <Button>{t("auth.signInButton")}</Button>
               </SignInButton>
             </div>
-          </SignedOut>
-        </div>
+          }
+        >
+          <div className="to-gray-50/50 flex flex-col gap-4 rounded-xl bg-gradient-to-b from-white p-6 shadow-lg">
+            <ChatHeader />
+            <div className="flex-1 overflow-hidden">
+              <AIChatClient />
+            </div>
+          </div>
+        </AuthenticatedSection>
       </div>
     </main>
   );
