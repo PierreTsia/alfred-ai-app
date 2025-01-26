@@ -1,1 +1,7 @@
 # Global hooks
+# Shared React hooks directory
+# 
+# This directory is for hooks that are:
+# 1. Used across multiple features
+# 2. Not specific to any single feature
+# 3. General purpose utility hooks
