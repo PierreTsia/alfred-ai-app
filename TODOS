@@ -1,0 +1,10 @@
+## TODOs
+
+- [x] ad cursor rules and update gen settings prompt
+- [x] update image exported as snippet
+- [ ] investigate langchain docs
+- [ ] define next iteration on doc analysis and start design thinking
+- [ ] improve auth flow: migrate from explicit userId passing to Clerk-Convex integrated auth
+      - Replace manual userId passing with ctx.auth.getUserIdentity()
+      - Test integration in non-critical feature first
+      - Update all affected mutations and queries 

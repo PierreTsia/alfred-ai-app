@@ -53,7 +53,17 @@ graph LR
     })),
     userId: v.string(),
     _creationTime: v.number()
-  }
+  },
+  documentChunks: defineTable({
+    fileId: v.id("files"),
+    text: v.string(),
+    metadata: v.object({
+      page: v.number(),
+      position: v.number(),
+    }),
+    vector: v.optional(v.array(v.number())),
+    processedAt: v.optional(v.number()),
+  })
 }
 ```
 
@@ -199,3 +209,41 @@ Monitor these metrics to ensure optimal retrieval:
 - Distribution of similarity scores in successful queries
 - Ratio of high-similarity (>60%) chunks in responses
 - User satisfaction correlation with similarity thresholds 
+
+### Implementation Status (January 28, 2025)
+
+#### Completed
+1. ✓ PDF Processing Pipeline
+   - Text extraction with PDF.js v3.4.120
+   - Chunking with metadata (page, position)
+   - Convex storage with proper schema
+   - Together.ai embeddings integration
+
+2. ✓ Technical Validations
+   - Embedding model: togethercomputer/m2-bert-80M-8k-retrieval
+   - Vector dimensions: 768
+   - Average magnitude: ~4.1
+   - Optimal threshold: 4.0
+   - Processing architecture: Convex actions for long-running tasks
+
+3. ✓ Infrastructure
+   - PDF.js worker configuration
+   - Together.ai API integration
+   - Convex schema and mutations
+   - Error handling and logging
+
+#### Known Limitations
+1. PDF.js Version Lock
+   - Currently locked to v3.4.120
+   - Version mismatch causes processing failures
+   - Need more robust version management
+
+2. Processing Constraints
+   - Single chunk processing at a time
+   - No progress tracking
+   - Potential timeouts for large documents
+
+3. Environment Management
+   - Together.ai API key setup between environments
+   - Worker URL configuration
+   - Error recovery mechanisms needed 

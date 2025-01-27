@@ -13,9 +13,11 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as documents from "../documents.js";
 import type * as files from "../files.js";
 import type * as internal_migrations from "../internal/migrations.js";
 import type * as tasks from "../tasks.js";
+import type * as together_ai_embeddings from "../together_ai_embeddings.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -26,9 +28,11 @@ import type * as tasks from "../tasks.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  documents: typeof documents;
   files: typeof files;
   "internal/migrations": typeof internal_migrations;
   tasks: typeof tasks;
+  together_ai_embeddings: typeof together_ai_embeddings;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

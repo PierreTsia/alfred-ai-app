@@ -2,10 +2,21 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
 
-export const generateUploadUrl = mutation({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.storage.generateUploadUrl();
+export const generateUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
+export const getUrl = query({
+  args: { id: v.id("files") },
+  handler: async (ctx, args) => {
+    const file = await ctx.db.get(args.id);
+    if (!file) {
+      return null;
+    }
+
+    // Get the URL for this file
+    const url = await ctx.storage.getUrl(file.storageId);
+    return url;
   },
 });
 
@@ -38,6 +49,7 @@ export const saveFile = mutation({
       name: args.name,
       size: args.size,
       userId: args.userId,
+      fileId: storageId, // Using storageId as fileId for now
       uploadedAt: Date.now(),
     });
   },
@@ -69,23 +81,5 @@ export const removeFile = mutation({
 
     // Just remove from database for now
     await ctx.db.delete(args.id);
-  },
-});
-
-export const getUrl = query({
-  args: {
-    id: v.id("files"),
-  },
-  handler: async (ctx, args) => {
-    const file = await ctx.db.get(args.id);
-    console.log("Retrieved file:", file);
-
-    if (!file) {
-      throw new Error("File not found");
-    }
-
-    // The storageId is already a clean UUID string
-    console.log("Storage ID:", file.storageId);
-    return await ctx.storage.getUrl(file.storageId as Id<"_storage">);
   },
 });

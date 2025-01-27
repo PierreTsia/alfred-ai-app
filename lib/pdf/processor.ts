@@ -1,8 +1,12 @@
-import {
-  RecursiveCharacterTextSplitter,
-  Document,
-} from "@langchain/text-splitter";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { Document } from "@langchain/core/documents";
 import * as pdfjs from "pdfjs-dist";
+
+// Initialize PDF.js worker once
+if (typeof window !== "undefined") {
+  pdfjs.GlobalWorkerOptions.workerSrc =
+    "https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js";
+}
 
 interface PDFChunk {
   text: string;

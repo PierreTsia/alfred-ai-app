@@ -24,30 +24,26 @@ export default defineSchema({
     .index("by_completion", ["isCompleted", "createdAt"]),
 
   files: defineTable({
+    name: v.string(),
     storageId: v.string(),
-    name: v.string(),
+    fileId: v.string(),
     size: v.number(),
-    userId: v.string(),
     uploadedAt: v.number(),
-  }),
-
-  documents: defineTable({
-    name: v.string(),
-    storageId: v.string(), // Reference to the PDF file in Convex storage
-    chunks: v.array(
-      v.object({
-        text: v.string(),
-        embedding: v.array(v.number()),
-        metadata: v.object({
-          page: v.number(),
-          position: v.number(),
-        }),
-      }),
-    ),
     userId: v.string(),
-    totalPages: v.number(),
-    processedAt: v.number(),
+    // Track if the file has been processed
+    processedAt: v.optional(v.number()),
   })
     .index("by_user", ["userId"])
     .index("by_name", ["name"]),
+
+  documentChunks: defineTable({
+    fileId: v.id("files"),
+    text: v.string(),
+    metadata: v.object({
+      page: v.number(),
+      position: v.number(),
+    }),
+    vector: v.optional(v.array(v.float64())),
+    processedAt: v.optional(v.number()),
+  }).index("by_file", ["fileId"]),
 });
