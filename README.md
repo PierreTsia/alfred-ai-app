@@ -8,6 +8,19 @@
   </video>
 </div>
 
+## TODOs
+
+- [ ] Set up authentication flow with Clerk
+- [ ] Implement real-time chat with Convex
+- [ ] Add file upload and management system
+- [ ] Create responsive dashboard layout
+- [ ] Integrate Together AI for LLM features
+- [ ] Set up analytics with Plausible
+- [ ] Add dark mode support
+- [ ] Implement search functionality
+- [ ] Create user settings page
+- [ ] Add API rate limiting and caching
+
 ## What's N.C3?
 
 N.C3 is a carefully curated stack that combines powerful modern technologies:
