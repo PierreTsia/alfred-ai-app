@@ -134,4 +134,33 @@ askQuestion: action({
 - Batch processing for large documents
 - Caching frequently accessed chunks
 - Progressive loading for large result sets
-- Error recovery and retry mechanisms 
+- Error recovery and retry mechanisms
+
+## PDF Viewer Implementation
+
+### Core Components
+- **Library**: @react-pdf-viewer/core + default-layout plugin
+- **Location**: `features/files/components/PDFPreview.tsx`
+- **Key Features**:
+  - Built-in toolbar (zoom, navigation)
+  - Memoized layout plugin
+  - Error boundaries with typed handlers
+  - Loading states
+  - Accessibility support
+
+### Usage
+```tsx
+<Worker workerUrl="/pdf.worker.min.js">
+  <Viewer 
+    fileUrl={url}
+    plugins={[defaultLayoutPluginInstance]}
+    renderError={(error: LoadError) => /* error UI */}
+    renderLoader={() => /* loading UI */}
+  />
+</Worker>
+```
+
+### Performance Notes
+- Worker runs in separate thread
+- Layout plugin instance is memoized
+- Lazy loading for large files 
