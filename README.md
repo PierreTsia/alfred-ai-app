@@ -2,16 +2,7 @@
   <h1>N.C3 <em style="font-size: 0.4em">(nice /naɪs/)</em> starter template</h1>
   <p>A modern full-stack template that's nice to work with 😉</p>
 
-  <div style="position: relative; padding-bottom: 56.25%; height: 0;">
-    <iframe
-      src="https://www.loom.com/embed/d11b8b69a8f948e087d71f6f1a84d83b?sid=22c54261-4368-43dd-a6c5-824c0a9c4982"
-      frameborder="0"
-      webkitallowfullscreen
-      mozallowfullscreen
-      allowfullscreen
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-    </iframe>
-  </div>
+  [![Watch the video](https://cdn.loom.com/sessions/thumbnails/d11b8b69a8f948e087d71f6f1a84d83b-with-play.gif)](https://www.loom.com/share/d11b8b69a8f948e087d71f6f1a84d83b?sid=22c54261-4368-43dd-a6c5-824c0a9c4982)
 </div>
 
 ## What's N.C3?
