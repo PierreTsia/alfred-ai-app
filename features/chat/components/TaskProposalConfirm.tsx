@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { TaskProposal } from "@/types";
+import { TaskProposal } from "@/core/types";
 import { useUser } from "@clerk/nextjs";
 import { useTranslations } from "next-intl";
 

@@ -27,7 +27,7 @@ export default function Chat({
   setMessages: React.Dispatch<
     React.SetStateAction<{ role: string; content: string }[]>
   >;
-  handleChat: (input: string) => void;
+  handleChat: (input?: string) => Promise<void>;
   topic: string;
 }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -68,7 +68,7 @@ export default function Chat({
 
   const handleSubmit = () => {
     const processedInput = processCommandInput(promptValue);
-    handleChat(processedInput);
+    handleChat(processedInput.content);
   };
 
   return (

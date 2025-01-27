@@ -17,10 +17,10 @@ export default function ChatAiClient() {
   const [promptValue, setPromptValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChat = async () => {
+  const handleChat = async (content?: string) => {
     try {
       setIsLoading(true);
-      const userMessage = { role: "user", content: promptValue };
+      const userMessage = { role: "user", content: content || promptValue };
       const updatedMessages = [...messages, userMessage];
       setMessages(updatedMessages);
 

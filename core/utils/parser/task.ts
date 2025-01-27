@@ -1,4 +1,4 @@
-import { TaskProposal } from "@/types";
+import { TaskProposal } from "@/core/types";
 
 export const parseTaskProposal = (message: string): TaskProposal | null => {
   try {

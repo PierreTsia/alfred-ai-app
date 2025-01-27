@@ -1,7 +1,7 @@
 import { FileIcon, PlusCircle, Upload, X, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
-import { formatFileSize } from "@/core/utils/files"
+import { formatFileSize } from "@/core/utils/files";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { useQuery, useMutation } from "convex/react";
@@ -229,7 +229,7 @@ const FilesList = () => {
               <p className="text-sm text-muted-foreground">
                 {file.status === "draft"
                   ? t("storage.files.pendingUpload")
-                  : formatDisplayDate(file.uploadedAt)}{" "}
+                  : file.uploadedAt}{" "}
                 · {file.size}
               </p>
             </div>
