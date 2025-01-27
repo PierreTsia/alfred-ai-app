@@ -44,7 +44,20 @@ type FileItem = {
   status: "uploaded" | "draft";
 };
 
-const FilesList = () => {
+type FileListProps = {
+  acceptedTypes?: Partial<typeof ACCEPTED_FILE_TYPES>;
+  renderActions?: (file: {
+    _id: Id<"files">;
+    name: string;
+    size: number;
+    uploadedAt: number;
+  }) => React.ReactNode;
+};
+
+const FilesList = ({
+  acceptedTypes = ACCEPTED_FILE_TYPES,
+  renderActions,
+}: FileListProps) => {
   const { user } = useUser();
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const saveFile = useMutation(api.files.saveFile);
@@ -65,9 +78,10 @@ const FilesList = () => {
   // Split file handling functions
   const uploadToStorage = async (file: File): Promise<string> => {
     const url = await generateUploadUrl();
-    const storageId = url.split("?")[0];
-    await uploadSingleFile(file, url);
-    return storageId;
+    const result = await uploadSingleFile(file, url);
+    // The response is a JSON object with { storageId: "..." }
+    const json = await result.json();
+    return json.storageId;
   };
 
   const saveFileToDb = async (
@@ -176,6 +190,8 @@ const FilesList = () => {
         `${t("storage.files.uploadError")}: ${result.statusText}`,
       );
     }
+
+    return result;
   };
 
   const handleRemoveFile = async (fileId: Id<"files">) => {
@@ -243,17 +259,25 @@ const FilesList = () => {
                 <X className="h-4 w-4" />
               </Button>
             ) : (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-500 h-8 w-8 flex-shrink-0 hover:text-red-500"
-                onClick={() => handleRemoveFile(file.id as Id<"files">)}
-                disabled={isDeleting === file.id}
-              >
-                <Trash2
-                  className={`h-4 w-4 ${isDeleting === file.id ? "animate-spin" : ""}`}
-                />
-              </Button>
+              <div className="flex items-center gap-2">
+                {renderActions?.({
+                  _id: file.id as Id<"files">,
+                  name: file.name,
+                  size: parseInt(file.size),
+                  uploadedAt: new Date(file.uploadedAt).getTime(),
+                })}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-500 h-8 w-8 flex-shrink-0 hover:text-red-500"
+                  onClick={() => handleRemoveFile(file.id as Id<"files">)}
+                  disabled={isDeleting === file.id}
+                >
+                  <Trash2
+                    className={`h-4 w-4 ${isDeleting === file.id ? "animate-spin" : ""}`}
+                  />
+                </Button>
+              </div>
             )}
           </div>
         ))}
@@ -265,7 +289,13 @@ const FilesList = () => {
         onChange={handleFileSelect}
         className="hidden"
         multiple
-        accept={Object.values(ACCEPTED_FILE_TYPES).flat().join(",")}
+        accept={Object.entries(acceptedTypes)
+          .filter(([_, extensions]) => extensions.length > 0)
+          .map(([type, extensions]) =>
+            type === "image/*" ? "image/*" : extensions,
+          )
+          .flat()
+          .join(",")}
       />
 
       <div className="mt-auto space-y-4 pt-6">

@@ -30,4 +30,24 @@ export default defineSchema({
     userId: v.string(),
     uploadedAt: v.number(),
   }),
+
+  documents: defineTable({
+    name: v.string(),
+    storageId: v.string(), // Reference to the PDF file in Convex storage
+    chunks: v.array(
+      v.object({
+        text: v.string(),
+        embedding: v.array(v.number()),
+        metadata: v.object({
+          page: v.number(),
+          position: v.number(),
+        }),
+      }),
+    ),
+    userId: v.string(),
+    totalPages: v.number(),
+    processedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_name", ["name"]),
 });

@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { FileIcon } from "lucide-react";
 import FilesList from "@/features/files/components/FilesList";
+import { PDFViewer } from "@/features/files/components/PDFViewer";
 
 import AuthenticatedSection from "@/core/components/AuthenticatedSection";
 import LinkBadge from "@/components/shared/LinkBadge";
