@@ -2,16 +2,10 @@
   <h1>N.C3 <em style="font-size: 0.4em">(nice /naɪs/)</em> starter template</h1>
   <p>A modern full-stack template that's nice to work with 😉</p>
 
-  <div style="position: relative; padding-bottom: 63.60424028268551%; height: 0;">
-    <iframe 
-      src="https://www.loom.com/embed/d11b8b69a8f948e087d71f6f1a84d83b?sid=52a0751d-03b8-490f-8703-abe78a75ad36" 
-      frameborder="0" 
-      webkitallowfullscreen 
-      mozallowfullscreen 
-      allowfullscreen 
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-    </iframe>
-  </div>
+  <video width="100%" controls>
+    <source src="https://raw.githubusercontent.com/PierreTsia/alfred-ai-app/main/public/nc3-demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 ## What's N.C3?
