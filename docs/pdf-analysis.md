@@ -164,3 +164,38 @@ askQuestion: action({
 - Worker runs in separate thread
 - Layout plugin instance is memoized
 - Lazy loading for large files 
+
+## Embedding Configuration
+
+### Similarity Thresholds
+Based on empirical testing with our embedding model (togethercomputer/m2-bert-80M-8k-retrieval):
+- Vector magnitudes average ~4.1
+- Optimal similarity threshold: 4.0 (one vector magnitude)
+- Resulting similarity ranges:
+  - 90-100%: Nearly identical content/concepts
+  - 60-89%: Strongly related content
+  - 30-59%: Loosely related content
+  - 0-29%: Unrelated content
+
+### Business Implications
+1. **Chunk Retrieval Strategy**:
+   - Primary search: Use chunks with >60% similarity
+   - Extended context: Include chunks with >30% similarity
+   - Ignore chunks below 30% similarity
+
+2. **Optimization Opportunities**:
+   - Cache frequently accessed chunks with high similarity scores
+   - Pre-compute similarity scores for common queries
+   - Implement similarity score bands for tiered retrieval
+
+3. **Next Steps**:
+   - [ ] Implement similarity threshold in chunk retrieval logic
+   - [ ] Add similarity score logging for query optimization
+   - [ ] Create monitoring for retrieval quality using similarity bands
+   - [ ] Consider adaptive thresholds based on query context
+
+### Performance Monitoring
+Monitor these metrics to ensure optimal retrieval:
+- Distribution of similarity scores in successful queries
+- Ratio of high-similarity (>60%) chunks in responses
+- User satisfaction correlation with similarity thresholds 
