@@ -113,6 +113,7 @@ This project follows a feature-first architecture with clear separation of conce
 ```
 
 ### Key Decisions
+
 - Feature-first organization following domain-driven design
 - Core business logic separated from UI utilities
 - Convex handles all data operations (no services layer needed)

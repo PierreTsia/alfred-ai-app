@@ -15,3 +15,7 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+
+.idea/
+.DS_Store

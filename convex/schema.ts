@@ -30,6 +30,8 @@ export default defineSchema({
     size: v.number(),
     uploadedAt: v.number(),
     userId: v.string(),
+    status: v.optional(v.string()),
+    chunkIds: v.optional(v.array(v.id("documentChunks"))),
     // Track if the file has been processed
     processedAt: v.optional(v.number()),
   })
@@ -38,12 +40,12 @@ export default defineSchema({
 
   documentChunks: defineTable({
     fileId: v.id("files"),
-    text: v.string(),
+    content: v.string(),
     metadata: v.object({
       page: v.number(),
       position: v.number(),
     }),
-    vector: v.optional(v.array(v.float64())),
+    embedding: v.optional(v.array(v.float64())),
     processedAt: v.optional(v.number()),
   }).index("by_file", ["fileId"]),
 });

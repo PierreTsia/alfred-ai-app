@@ -1,4 +1,3 @@
-
 export const processCommandInput = (input: string) => {
   const command = input.split(" ")[0];
   const content = input.slice(command.length).trim();
@@ -20,4 +19,4 @@ export const processCommandInput = (input: string) => {
         content: input,
       };
   }
-}; 
+};

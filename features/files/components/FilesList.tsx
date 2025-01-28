@@ -9,6 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 import { formatDate, formatDisplayDate } from "@/core/utils/date";
+import { toast } from "react-hot-toast";
 
 const ACCEPTED_FILE_TYPES = {
   "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -202,7 +203,7 @@ const FilesList = ({
       await removeFile({ id: fileId, userId: user.id });
     } catch (error) {
       console.error("Delete error:", error);
-      // TODO: Add toast notification
+      toast.error("Failed to delete file");
     } finally {
       setIsDeleting(null);
     }

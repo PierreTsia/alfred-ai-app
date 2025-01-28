@@ -40,4 +40,4 @@ export const parseTaskProposal = (message: string): TaskProposal | null => {
     console.log("Parse error:", e);
     return null;
   }
-}; 
+};

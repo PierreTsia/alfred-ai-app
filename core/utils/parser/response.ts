@@ -26,4 +26,4 @@ export const extractJsonFromResponseText = (message: string) => {
 
 export const formatUserInput = (message: string): string => {
   return highlightCommands(message);
-}; 
+};

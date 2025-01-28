@@ -1,8 +1,10 @@
 import { Together } from "together-ai";
+import { DatabaseReader, DatabaseWriter } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 
 let together: Together | null = null;
 
-function getClient() {
+function getClient(): Together {
   if (!together) {
     const apiKey = process.env.TOGETHER_API_KEY;
     if (!apiKey) {
@@ -15,30 +17,21 @@ function getClient() {
   return together;
 }
 
-export async function generateEmbeddings({
-  input,
-  model,
-}: {
-  input: string | string[];
-  model?: string;
-}) {
-  console.log("🔄 Generating embeddings for:", {
-    inputLength: Array.isArray(input)
-      ? input.map((t) => t.length)
-      : input.length,
-    model,
-  });
-
+export const generateEmbeddings = async (
+  ctx: { db: DatabaseReader & DatabaseWriter },
+  chunkIds: Id<"documentChunks">[],
+): Promise<number[]> => {
   const client = getClient();
-  const response = await client.embeddings.create({
-    model: model ?? "togethercomputer/m2-bert-80M-8k-retrieval",
-    input,
+
+  // For now, we only process the first chunk
+  const chunkId = chunkIds[0];
+  const chunk = await ctx.db.get(chunkId);
+  if (!chunk) throw new Error("Chunk not found");
+
+  const embedding = await client.embeddings.create({
+    model: "togethercomputer/m2-bert-80M-8k-retrieval",
+    input: chunk.content,
   });
 
-  console.log("✓ Generated embeddings:", {
-    count: response.data.length,
-    firstVectorLength: response.data[0].embedding.length,
-  });
-
-  return response.data.map((item) => item.embedding);
-}
+  return embedding.data[0].embedding;
+};

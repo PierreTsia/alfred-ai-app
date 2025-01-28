@@ -4,62 +4,57 @@ import {
   action,
   internalQuery,
   internalMutation,
+  ActionCtx,
+  DatabaseReader,
+  DatabaseWriter,
 } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 import { generateEmbeddings } from "./together_ai_embeddings";
 import { internal } from "./_generated/api";
+import { Together } from "together-ai";
 
 interface DocumentChunk {
   _id: Id<"documentChunks">;
-  text: string;
+  content: string;
   metadata: {
     page: number;
     position: number;
   };
   fileId: Id<"files">;
-  vector?: number[];
+  embedding?: number[];
   processedAt?: number;
 }
 
 export const storeDocumentChunks = mutation({
   args: {
     fileId: v.id("files"),
-    chunks: v.array(
-      v.object({
-        text: v.string(),
-        metadata: v.object({
-          page: v.number(),
-          position: v.number(),
-        }),
-      }),
-    ),
+    chunks: v.array(v.string()),
   },
-  handler: async (ctx, args) => {
-    console.log("🔍 storeDocumentChunks called with:", {
-      fileId: args.fileId,
-      numChunks: args.chunks.length,
-    });
-
-    // Verify the file exists
+  async handler(ctx, args) {
     const file = await ctx.db.get(args.fileId);
     if (!file) {
-      console.error("❌ File not found:", args.fileId);
-      throw new Error("File not found");
+      throw new Error(`File not found: ${args.fileId}`);
     }
-    console.log("✓ File found:", file);
 
-    // Store all chunks
-    console.log("📝 Storing chunks...");
     const chunkIds = await Promise.all(
       args.chunks.map((chunk) =>
         ctx.db.insert("documentChunks", {
           fileId: args.fileId,
-          text: chunk.text,
-          metadata: chunk.metadata,
+          content: chunk,
+          metadata: {
+            page: 1,
+            position: 0,
+          },
         }),
       ),
     );
-    console.log(`✓ Stored ${chunkIds.length} chunks`);
+
+    await ctx.db.patch(args.fileId, {
+      status: "processed",
+      chunkIds,
+    });
+
+    await generateEmbeddings(ctx, chunkIds);
 
     return chunkIds;
   },
@@ -70,44 +65,48 @@ export const processChunkEmbeddings = action({
     fileId: v.id("files"),
   },
   handler: async (
-    ctx,
+    ctx: ActionCtx,
     args,
   ): Promise<{ processed: number; debug: string[] }> => {
     const debug: string[] = [];
     debug.push(`Starting processChunkEmbeddings for fileId: ${args.fileId}`);
 
-    // Get unprocessed chunks for this file
-    const chunks: DocumentChunk[] = await ctx.runQuery(
-      internal.documents.getUnprocessedChunks,
-      { fileId: args.fileId },
-    );
+    const chunks = await ctx.runQuery(internal.documents.getUnprocessedChunks, {
+      fileId: args.fileId,
+    });
     debug.push(`Found ${chunks.length} unprocessed chunks`);
 
     if (chunks.length === 0) {
       return { processed: 0, debug };
     }
 
-    // Process first chunk as a test
     const chunk = chunks[0];
     debug.push(
-      `Processing chunk ${chunk._id} (text length: ${chunk.text.length})`,
+      `Processing chunk ${chunk._id} (content length: ${chunk.content.length})`,
     );
 
     try {
-      const embeddings = await generateEmbeddings({
-        input: chunk.text,
-        model: "togethercomputer/m2-bert-80M-8k-retrieval",
+      // Get the chunk content
+      const chunkData = await ctx.runQuery(internal.documents.getChunk, {
+        id: chunk._id,
       });
-      debug.push(
-        `Generated embeddings (vector length: ${embeddings[0].length})`,
-      );
+      if (!chunkData) {
+        throw new Error("Chunk not found");
+      }
 
-      // Update the chunk with its embedding
+      // Generate embedding using the content
+      const client = new Together({ apiKey: process.env.TOGETHER_API_KEY! });
+      const embedding = await client.embeddings.create({
+        model: "togethercomputer/m2-bert-80M-8k-retrieval",
+        input: chunkData.content,
+      });
+
+      // Store the embedding
       await ctx.runMutation(internal.documents.updateChunkEmbeddings, {
         chunkId: chunk._id,
-        vector: embeddings[0],
+        embedding: embedding.data[0].embedding,
       });
-      debug.push("Successfully updated chunk with embeddings");
+      debug.push(`Generated embeddings`);
 
       return { processed: 1, debug };
     } catch (error) {
@@ -119,7 +118,6 @@ export const processChunkEmbeddings = action({
   },
 });
 
-// Helper query to get unprocessed chunks
 export const getUnprocessedChunks = internalQuery({
   args: {
     fileId: v.id("files"),
@@ -141,12 +139,32 @@ export const getUnprocessedChunks = internalQuery({
 export const updateChunkEmbeddings = internalMutation({
   args: {
     chunkId: v.id("documentChunks"),
-    vector: v.array(v.float64()),
+    embedding: v.array(v.float64()),
   },
-  handler: async (ctx, args): Promise<void> => {
+  handler: async (ctx, args) => {
     await ctx.db.patch(args.chunkId, {
-      vector: args.vector,
+      embedding: args.embedding,
       processedAt: Date.now(),
     });
+  },
+});
+
+export const getChunk = internalQuery({
+  args: { id: v.id("documentChunks") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
+export const updateChunk = internalMutation({
+  args: {
+    id: v.id("documentChunks"),
+    update: v.object({
+      embedding: v.optional(v.array(v.float64())),
+      processedAt: v.optional(v.number()),
+    }),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, args.update);
   },
 });
