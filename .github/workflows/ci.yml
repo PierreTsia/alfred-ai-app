@@ -44,13 +44,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run tests
-        run: pnpm test
+      - name: Run tests with coverage
+        run: pnpm test:ci
 
-      - name: Report test results
-        if: always()
+      - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: coverage-report
           path: coverage/
-          retention-days: 30 
+          retention-days: 30
+        if: always()  # Upload even if tests fail 

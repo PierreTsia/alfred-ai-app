@@ -213,47 +213,60 @@ describe('Schema Validation', () => {
 
 ## Next Steps
 
-1. [ ] Set up Vitest with edge-runtime environment
-   - Install required dependencies
-   - Configure vitest.config.mts
-   - Set up proper ESM handling
-   - Update package.json scripts
+1. [x] Set up Vitest with edge-runtime environment
+   - ✅ Install required dependencies
+   - ✅ Configure vitest.config.mts
+   - ✅ Set up proper ESM handling
+   - ✅ Update package.json scripts
 
-2. [ ] Install and configure `convex-test`
-   - Add convex-test library
-   - Set up test environment
-   - Configure test helpers
-   - Verify script execution locally
+2. [x] Install and configure `convex-test`
+   - ✅ Add convex-test library
+   - ✅ Set up test environment
+   - ✅ Configure test helpers
+   - ✅ Verify script execution locally
 
 3. [ ] Migrate and validate existing tests
-   - Port existing test files to Vitest syntax
-   - Update mocking strategy to use convex-test
-   - Ensure all existing tests pass
-   - Document any breaking changes or gotchas
-   - Verify CI script execution
+   - [x] Port PDF processor tests to Vitest syntax
+   - [ ] Port remaining test files to Vitest syntax
+   - [ ] Update mocking strategy to use convex-test
+   - [ ] Ensure all existing tests pass
+   - [ ] Document any breaking changes or gotchas
+   - [ ] Verify CI script execution
 
 4. [ ] Create first test suite for document processing using `convexTest()`
-   - Implement core document processing tests
-   - Set up proper mocking with convex-test
-   - Validate against existing functionality
-   - Run through CI pipeline to verify
+   - [ ] Implement core document processing tests
+   - [ ] Set up proper mocking with convex-test
+   - [ ] Validate against existing functionality
+   - [ ] Run through CI pipeline to verify
 
 5. [ ] Set up Together AI mocking with Vitest
-   - Implement mock factory for Together AI
-   - Add test helpers for AI-related testing
-   - Document mocking patterns
-   - Verify in CI environment
+   - [ ] Implement mock factory for Together AI
+   - [ ] Add test helpers for AI-related testing
+   - [ ] Document mocking patterns
+   - [ ] Verify in CI environment
 
 6. [ ] Configure CI pipeline with Vitest coverage reporting
-   - Set up GitHub Actions for Vitest
-   - Configure coverage thresholds
-   - Add coverage reporting to PR process
-   - Use `pnpm test:ci` command
-   - Set up coverage artifacts
+   - [ ] Set up GitHub Actions for Vitest
+   - [ ] Configure coverage thresholds
+   - [ ] Add coverage reporting to PR process
+   - [ ] Use `pnpm test:ci` command
+   - [ ] Set up coverage artifacts
 
 7. [ ] Set up Playwright for E2E testing
-   - Install Playwright
-   - Configure for Next.js environment
-   - Set up first critical user flow test
-   - Add to CI pipeline
-   - Configure test recording for debugging
+   - [ ] Install Playwright
+   - [ ] Configure for Next.js environment
+   - [ ] Set up first critical user flow test
+   - [ ] Add to CI pipeline
+   - [ ] Configure test recording for debugging
+
+8. [ ] Environment-specific Testing Improvements
+   - [ ] Document environment setup (node vs edge-runtime)
+   - [ ] Create environment-specific test helpers
+   - [ ] Add environment validation in CI
+   - [ ] Update documentation with environment guidelines
+
+9. [ ] Test Coverage Strategy
+   - [ ] Define coverage targets per environment
+   - [ ] Set up coverage reporting in CI
+   - [ ] Create coverage improvement plan
+   - [ ] Document coverage expectations
