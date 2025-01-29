@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useAction } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
@@ -31,7 +31,6 @@ export function PDFPreview({ fileId, onClose }: Props) {
   const [debug, setDebug] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const storeChunks = useMutation(api.documents.storeDocumentChunks);
-  const processEmbeddings = useAction(api.documents.processChunkEmbeddings);
 
   const handleProcess = async () => {
     if (!url) return;
@@ -48,15 +47,12 @@ export function PDFPreview({ fileId, onClose }: Props) {
       setDebug((prev) => [...prev, `Processed ${chunks.length} chunks`]);
 
       const chunkIds = await storeChunks({ fileId, chunks });
-      setDebug((prev) => [...prev, `Stored ${chunkIds.length} chunks`]);
-
-      const processedCount = await processEmbeddings({ fileId });
       setDebug((prev) => [
         ...prev,
-        `Generated embeddings for ${processedCount} chunks`,
+        `Stored ${chunkIds.length} chunks. Processing started...`,
       ]);
 
-      toast.success("PDF processed successfully!");
+      toast.success("PDF processing started!");
     } catch (error: unknown) {
       console.error("Error processing PDF:", error);
       toast.error("Failed to process PDF");
