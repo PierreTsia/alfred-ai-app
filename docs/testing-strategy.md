@@ -227,30 +227,31 @@ describe('Schema Validation', () => {
 
 3. [ ] Migrate and validate existing tests
    - [x] Port PDF processor tests to Vitest syntax
+   - [-] Fix skipped embeddings test (currently skipped)
    - [ ] Port remaining test files to Vitest syntax
    - [ ] Update mocking strategy to use convex-test
    - [ ] Ensure all existing tests pass
    - [ ] Document any breaking changes or gotchas
-   - [ ] Verify CI script execution
+   - [x] Verify CI script execution
 
-4. [ ] Create first test suite for document processing using `convexTest()`
+4. [x] Configure CI pipeline with Vitest coverage reporting
+   - ✅ Set up GitHub Actions for Vitest
+   - ✅ Add coverage dependency installation
+   - ✅ Add coverage reporting to PR process
+   - ✅ Use `pnpm test:ci` command
+   - ✅ Set up coverage artifacts
+
+5. [ ] Create first test suite for document processing using `convexTest()`
    - [ ] Implement core document processing tests
    - [ ] Set up proper mocking with convex-test
    - [ ] Validate against existing functionality
    - [ ] Run through CI pipeline to verify
 
-5. [ ] Set up Together AI mocking with Vitest
+6. [ ] Set up Together AI mocking with Vitest
    - [ ] Implement mock factory for Together AI
    - [ ] Add test helpers for AI-related testing
    - [ ] Document mocking patterns
    - [ ] Verify in CI environment
-
-6. [ ] Configure CI pipeline with Vitest coverage reporting
-   - [ ] Set up GitHub Actions for Vitest
-   - [ ] Configure coverage thresholds
-   - [ ] Add coverage reporting to PR process
-   - [ ] Use `pnpm test:ci` command
-   - [ ] Set up coverage artifacts
 
 7. [ ] Set up Playwright for E2E testing
    - [ ] Install Playwright
@@ -260,13 +261,13 @@ describe('Schema Validation', () => {
    - [ ] Configure test recording for debugging
 
 8. [ ] Environment-specific Testing Improvements
-   - [ ] Document environment setup (node vs edge-runtime)
+   - [x] Document environment setup (node vs edge-runtime)
    - [ ] Create environment-specific test helpers
    - [ ] Add environment validation in CI
    - [ ] Update documentation with environment guidelines
 
 9. [ ] Test Coverage Strategy
    - [ ] Define coverage targets per environment
-   - [ ] Set up coverage reporting in CI
+   - [x] Set up coverage reporting in CI
    - [ ] Create coverage improvement plan
    - [ ] Document coverage expectations

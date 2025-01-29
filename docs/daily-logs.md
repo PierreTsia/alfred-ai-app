@@ -10,10 +10,12 @@ Decided to switch to Vitest + `convex-test` for backend testing and Playwright f
 📝 Full analysis in [testing-strategy.md](./testing-strategy.md)
 
 Quick todos:
-- [ ] Remove Jest config and dependencies
-- [ ] Set up Vitest with edge-runtime
-- [ ] Port one test file as proof of concept
-- [ ] Set up basic Playwright config
+- [x] Remove Jest config and dependencies
+- [x] Set up Vitest with edge-runtime
+- [x] Port one test file as proof of concept
+- [x] Set up CI with coverage reporting
+- [ ] Fix skipped embeddings test
+- [ ] Set up basic Playwright config - 🔄 later
 
 ### 🎯 Vector Search MVP (Night)
 Successfully implemented basic vector search functionality.
