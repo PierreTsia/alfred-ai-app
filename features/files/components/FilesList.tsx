@@ -1,4 +1,11 @@
-import { FileIcon, PlusCircle, Upload, X, Trash2 } from "lucide-react";
+import {
+  FileIcon,
+  PlusCircle,
+  Upload,
+  X,
+  Trash2,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { formatFileSize } from "@/core/utils/files";
@@ -10,6 +17,7 @@ import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 import { formatDate, formatDisplayDate } from "@/core/utils/date";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const ACCEPTED_FILE_TYPES = {
   "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -75,6 +83,8 @@ const FilesList = ({
   // Add loading states
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+
+  const router = useRouter();
 
   // Split file handling functions
   const uploadToStorage = async (file: File): Promise<string> => {
@@ -209,6 +219,10 @@ const FilesList = ({
     }
   };
 
+  const handleViewDetails = (fileId: Id<"files">) => {
+    router.push(`/documents/${fileId}`);
+  };
+
   const hasDraftFiles = draftFiles.length > 0;
 
   const byStatus = (a: FileItem, b: FileItem) => {
@@ -261,6 +275,15 @@ const FilesList = ({
               </Button>
             ) : (
               <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-shrink-0"
+                  onClick={() => handleViewDetails(file.id as Id<"files">)}
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Details
+                </Button>
                 {renderActions?.({
                   _id: file.id as Id<"files">,
                   name: file.name,
