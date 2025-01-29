@@ -47,5 +47,14 @@ export default defineSchema({
     }),
     embedding: v.optional(v.array(v.float64())),
     processedAt: v.optional(v.number()),
-  }).index("by_file", ["fileId"]),
+    // Adding userId for filtering
+    userId: v.string(),
+  })
+    .index("by_file", ["fileId"])
+    .index("by_user", ["userId"])
+    .vectorIndex("by_embedding", {
+      vectorField: "embedding",
+      dimensions: 768, // m2-bert-80M-8k-retrieval model outputs 768-dimensional vectors
+      filterFields: ["userId"], // Allow filtering by user for security
+    }),
 });
