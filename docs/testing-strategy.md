@@ -159,6 +159,45 @@ describe('Schema Validation', () => {
    - 90%+ coverage for file management
    - 90%+ coverage for schema validation
 
+## Initial PR Strategy: Base Testing Infrastructure
+
+To establish a solid foundation without over-engineering, we're focusing on essential components first:
+
+### Must Have (Initial PR)
+- ✅ Working Vitest setup with proper environment configuration
+- ✅ PDF processor tests as first example of Node environment tests
+- ⭐ Embeddings test as second example (currently skipped)
+- ✅ CI pipeline with coverage reporting
+- ✅ Clear environment separation (node vs edge-runtime)
+- 🆕 Basic Convex test setup
+  - One simple query test using `convexTest(schema)`
+  - Example of auth context with `withIdentity()`
+  - No complex mocking yet, just proof of concept
+
+### Deferred for Future PRs
+1. Advanced Convex Testing
+   - Complex database interactions
+   - Full auth flow testing
+   - Vector search testing
+   - Cron job testing
+
+2. E2E Testing Infrastructure
+   - Playwright setup
+   - Critical user flows
+   - Visual testing
+
+3. Advanced Coverage
+   - Coverage targets per module
+   - Coverage improvement plans
+   - Performance benchmarks
+
+This approach gives us:
+1. Immediate confidence in core processing
+2. Working CI/CD pipeline
+3. Clear examples for both Node and edge-runtime
+4. ✨ Working example of Convex testing
+5. Solid foundation for future test expansion
+
 ## Implementation Plan
 
 ### Phase 1: Foundation

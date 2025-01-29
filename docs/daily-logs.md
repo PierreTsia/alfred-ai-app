@@ -12,10 +12,16 @@ Decided to switch to Vitest + `convex-test` for backend testing and Playwright f
 Quick todos:
 - [x] Remove Jest config and dependencies
 - [x] Set up Vitest with edge-runtime
-- [x] Port one test file as proof of concept
+- [x] Port PDF processor tests
 - [x] Set up CI with coverage reporting
 - [ ] Fix skipped embeddings test
-- [ ] Set up basic Playwright config - 🔄 later
+- [ ] Add basic Convex test (files.list) as proof of concept
+- [ ] 🔜 Set up Playwright - POSTPONED
+
+Next PR will focus on:
+- Advanced Convex testing (auth, vector search)
+- Coverage improvements
+- E2E setup with Playwright
 
 ### 🎯 Vector Search MVP (Night)
 Successfully implemented basic vector search functionality.
