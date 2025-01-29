@@ -1,12 +1,10 @@
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { Document } from "@langchain/core/documents";
 import * as pdfjs from "pdfjs-dist";
+import { PDF_CONFIG } from "../config/pdf";
 
-// Initialize PDF.js worker once
-if (typeof window !== "undefined") {
-  pdfjs.GlobalWorkerOptions.workerSrc =
-    "https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js";
-}
+// Set worker URL
+pdfjs.GlobalWorkerOptions.workerSrc = PDF_CONFIG.workerUrl;
 
 interface PDFChunk {
   text: string;

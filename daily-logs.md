@@ -1,67 +1,144 @@
-## PDF.js Migration Plan (January 28, 2025)
+## Latest Updates
 
-### Phase 1: Text Processing Migration
+### Document Processing Pipeline Overhaul (January 29, 2025 - Evening)
 
-1. [x] Add pdf-parse dependency
-2. [x] Create new text extraction service
-   - [x] Implement clean interface
-   - [x] Add proper error handling
-   - [x] Include progress tracking
-3. [ ] Migrate processor.ts incrementally
-   - [x] Basic text extraction working
-   - [x] Page tracking implemented
-   - [ ] Fix PDF format compatibility issues
-   - [ ] Add fallback mechanism during transition
-4. [ ] Update RAG pipeline to use new extractor
-5. [ ] Remove PDF.js from text processing
+🎉 Major improvements to the document processing pipeline:
 
-### Implementation Progress
+1. Fixed Embedding Generation
+   - [x] Resolved `setTimeout` issues by moving to proper Convex action
+   - [x] Implemented proper batch processing for all chunks
+   - [x] Added robust error handling for Together AI calls
+   - [x] Improved status tracking (processing → processed)
 
-1. Test Infrastructure Setup:
+2. Resource Management
+   - [x] Implemented cascade delete for documents
+   - [x] Proper cleanup of:
+     - Document records
+     - Associated chunks
+     - Generated embeddings
+     - Storage files
+   - [x] Added proper TypeScript types throughout
 
-   - [x] Chose Jest over Vitest for better Node.js/Buffer support
-   - [x] Added Jest + TypeScript testing infrastructure
-   - [x] Created test structure with extensible patterns
-   - [✓] ~Added PDF fixture generation with PDFKit~ Decided to use real PDF samples instead
-   - [x] Implemented basic test suite:
-     - Structure validation
-     - Content verification
-     - Page number handling
-     - Position tracking
+3. Architecture Improvements
+   - [x] Separated concerns between storage, chunks, and embeddings
+   - [x] Proper async handling with `ctx.scheduler`
+   - [x] Added internal mutations for better code organization
+   - [x] Improved error boundaries and recovery
+   - [x] Centralized PDF.js version management in config
 
-2. PDF Processing Implementation:
+4. Technical Solutions
+   - PDF.js Version Management:
+     - Kept version lock at 3.4.120 for stability
+     - Moved all version references to central config
+     - Single source of truth for worker URL
+     - Easier future version updates
 
-   - [x] Basic PDF text extraction
-   - [x] Page number preservation
-   - [x] Chunk position tracking
-   - [x] Consistent interface with old processor
-   - [✓] ~Fix PDF format compatibility~ Skipped PDFKit issues, using real samples
-   - [ ] Add real PDF samples for testing
+### Next Steps & Priorities
 
-3. Next Steps:
-   - [x] ~Fix PDF format issues~ SKIPPED: Decided to use real PDFs instead
-     - PDFKit generation incompatible with pdf-parse
-     - Not worth investigating for test fixtures
-   - [ ] Add real PDF samples for testing:
-     - Single page PDF
-     - Multi-page document
-     - PDF with images
-     - Large document (50+ pages)
-   - [ ] Start gradual migration of production code
-   - [ ] Performance benchmarking vs old implementation
+1. UI/UX Improvements (Backlog)
+   - [ ] PDF Viewer Redesign:
+     - Show PDF snapshot/thumbnail in main grid
+     - Full viewer in modal/dedicated view
+     - Keep processing UI simple for now (current vertical layout)
+   - [ ] Add progress UI feedback during processing
+   - [ ] Set up proper error states in UI
 
-### Expected Benefits
+2. Embedding Pipeline
+   - [ ] Implement retry mechanism for failed chunks
+   - [ ] Add monitoring for embedding quality
+   - [ ] Consider caching strategy for frequent searches
+   - [ ] Implement similarity search endpoint
 
-- Simplified text extraction pipeline
-- No more worker/version management headaches
-- Better suited for RAG processing
-- Reduced infrastructure dependencies
+3. Testing & Validation
+   - [ ] Test with various PDF sizes
+   - [ ] Add performance benchmarks
+   - [ ] Add error case coverage
+   - [ ] Document the complete flow
 
-### Risks & Mitigations
+4. Technical Debt
+   - [ ] Improve auth flow: migrate to Clerk-Convex integrated auth
+   - [ ] Make PDF.js version management more robust:
+     - Consider separating viewing and parsing concerns
+     - Evaluate specialized parsing libraries
+     - Keep PDF.js for viewing only
+   - [ ] Add proper JSDoc documentation
+   - [ ] Consider chunking strategy optimization
 
-- Text extraction differences: Need thorough testing
-- Performance impact: Benchmark before full migration
-- Transition period: Maintain fallback capability
+### PDF.js Resolution (January 28, 2025 - Evening)
+
+🎉 Successfully resolved PDF.js fragility:
+- Decided against pdf-parse migration
+- Kept PDF.js but improved implementation
+- Strategy from pdf-js.md remains valid for future optimizations
+- Technical debt reduced significantly
+
+### Next Session Priority Tasks 
+
+🎯 Focus Areas:
+1. Complete Embeddings Pipeline
+   - [x] Fix batch processing in `generateEmbeddings` (currently only processes first chunk)
+   - [ ] Add proper error handling and retries for Together AI calls
+   - [ ] Implement progress tracking for embedding generation
+   - [ ] Add UI feedback during processing
+
+2. Document Processing Flow
+   - [ ] Connect PDF viewer to document processing
+   - [ ] Implement proper chunking with metadata (page numbers)
+   - [ ] Add validation for processed chunks
+   - [ ] Set up proper error states in UI
+
+3. Testing & Validation
+   - [ ] Test with various PDF sizes
+   - [ ] Validate embedding quality
+   - [ ] Add proper error logging
+   - [ ] Document the complete flow
+
+Expected Outcome: Complete end-to-end flow from PDF upload to searchable embeddings.
+
+### Code Review Tasks (January 29, 2025)
+
+1. Type Safety:
+   - [x] Replace `any` types with proper interfaces
+   - [x] Add type guards for PDF data structure
+   - [ ] Consider zod schema for validation
+   - [x] Document type structure
+
+2. Error Handling:
+   - [x] Add specific error types for different failure modes
+   - [x] Improve error messages for debugging
+   - [x] Consider retry mechanism for transient failures
+   - [ ] Add logging strategy
+
+3. Performance & Memory:
+   - [x] Evaluate memory usage for large PDFs
+   - [x] Consider streaming for large files
+   - [ ] Add performance benchmarks
+   - [ ] Compare with previous implementation
+
+4. Code Structure:
+   - [x] Extract PDF parsing logic to separate module
+   - [x] Add configuration options (chunk size, etc.)
+   - [ ] Consider builder pattern for flexibility
+   - [ ] Add proper JSDoc documentation
+
+5. Testing:
+   - [x] Add unit tests for utilities
+   - [ ] Add error case coverage
+   - [x] Test with real-world PDF samples
+   - [ ] Add performance tests
+
+### Migration Success (January 29, 2025)
+
+- Initial pdf2json implementation:
+  - Basic PDF parsing with page tracking
+  - Text decoding for special characters
+  - Maintained consistent chunking interface
+  - Tests passing with new implementation
+- Status: ⚠️ Needs Review
+  - Code structure needs refinement
+  - Type safety improvements needed
+  - Error handling could be enhanced
+  - Performance implications unknown
 
 ### Technical Decision (January 29, 2025)
 
@@ -88,64 +165,15 @@
   - Proceeding with pdf2json implementation
   - Will maintain same interface for minimal impact on existing code
 
-### Migration Success (January 29, 2025)
-
-- Initial pdf2json implementation:
-  - Basic PDF parsing with page tracking
-  - Text decoding for special characters
-  - Maintained consistent chunking interface
-  - Tests passing with new implementation
-- Status: ⚠️ Needs Review
-  - Code structure needs refinement
-  - Type safety improvements needed
-  - Error handling could be enhanced
-  - Performance implications unknown
-
-### Code Review Tasks (January 29, 2025)
-
-1. Type Safety:
-
-   - [ ] Replace `any` types with proper interfaces
-   - [ ] Add type guards for PDF data structure
-   - [ ] Consider zod schema for validation
-   - [ ] Document type structure
-
-2. Error Handling:
-
-   - [ ] Add specific error types for different failure modes
-   - [ ] Improve error messages for debugging
-   - [ ] Consider retry mechanism for transient failures
-   - [ ] Add logging strategy
-
-3. Performance & Memory:
-
-   - [ ] Evaluate memory usage for large PDFs
-   - [ ] Consider streaming for large files
-   - [ ] Add performance benchmarks
-   - [ ] Compare with previous implementation
-
-4. Code Structure:
-
-   - [ ] Extract PDF parsing logic to separate module
-   - [ ] Add configuration options (chunk size, etc.)
-   - [ ] Consider builder pattern for flexibility
-   - [ ] Add proper JSDoc documentation
-
-5. Testing:
-   - [ ] Add unit tests for utilities
-   - [ ] Add error case coverage
-   - [ ] Test with real-world PDF samples
-   - [ ] Add performance tests
-
-## Today's Accomplishments (January 28, 2025)
+### Today's Accomplishments (January 28, 2025)
 
 1. Implemented complete PDF processing pipeline:
    - Text extraction with PDF.js
    - Chunking with metadata (page numbers, positions)
    - Storage in Convex
    - Embedding generation with Together.ai
-2. Technical Decisions & Learnings:
 
+2. Technical Decisions & Learnings:
    - PDF.js version locked to 3.4.120 for stability
    - Together.ai model: m2-bert-80M-8k-retrieval
    - Vector size: 768 dimensions
@@ -158,7 +186,7 @@
    - Together.ai API key management between environments
    - Processing timeouts for large PDFs
 
-## Next Steps
+## Next Steps & Future Plans
 
 ### Phase 3.2: RAG Implementation
 
@@ -171,7 +199,11 @@
 ### Technical Debt
 
 - [ ] Cascade deletes for documents, chunks, and embeddings
-- [ ] improve auth flow: migrate from explicit userId passing to Clerk-Convex integrated auth - Replace manual userId passing with ctx.auth.getUserIdentity() - Test integration in non-critical feature first - Update all affected mutations and queries - [ ] Make PDF.js version management more robust
+- [ ] improve auth flow: migrate from explicit userId passing to Clerk-Convex integrated auth
+  - Replace manual userId passing with ctx.auth.getUserIdentity()
+  - Test integration in non-critical feature first
+  - Update all affected mutations and queries
+- [ ] Make PDF.js version management more robust
 - [ ] Add retry mechanism for Together.ai API calls
 - [ ] Implement proper error handling for timeouts
 - [ ] Add monitoring for embedding quality

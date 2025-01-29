@@ -4,18 +4,20 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import { X } from "lucide-react";
+import { X, FileText } from "lucide-react";
 import * as pdfjs from "pdfjs-dist";
 import { toast } from "sonner";
 import { processPDF } from "@/lib/pdf/processor";
+import { Button } from "@/components/ui/button";
+import { PDF_CONFIG } from "@/lib/config/pdf";
 
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 // Ensure we're using the correct version
-if (pdfjs.version !== "3.4.120") {
+if (pdfjs.version !== PDF_CONFIG.version) {
   console.warn(
-    `PDF.js version mismatch. Expected: 3.4.120, Found: ${pdfjs.version}`,
+    `PDF.js version mismatch. Expected: ${PDF_CONFIG.version}, Found: ${pdfjs.version}`,
   );
 }
 
@@ -70,18 +72,23 @@ export function PDFPreview({ fileId, onClose }: Props) {
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
     renderToolbar: (Toolbar) => (
       <div className="rpv-toolbar">
-        <div className="rpv-toolbar__left">
+        <div className="rpv-toolbar__left flex items-center gap-4">
+          <Button
+            onClick={handleProcess}
+            disabled={isProcessing}
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <FileText className="h-4 w-4" />
+            {isProcessing ? "Processing..." : "Process PDF"}
+          </Button>
           <Toolbar />
         </div>
         {onClose && (
           <div className="rpv-toolbar__right">
-            <button
-              className="rpv-core__minimal-button"
-              onClick={onClose}
-              title="Close"
-            >
-              <X className="rpv-core__minimal-button-icon" />
-            </button>
+            <Button variant="ghost" size="icon" onClick={onClose} title="Close">
+              <X className="h-4 w-4" />
+            </Button>
           </div>
         )}
       </div>
@@ -92,28 +99,18 @@ export function PDFPreview({ fileId, onClose }: Props) {
     <div className="relative h-full w-full">
       {url ? (
         <div className="h-full">
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          <Worker workerUrl={PDF_CONFIG.workerUrl}>
             <Viewer fileUrl={url} plugins={[defaultLayoutPluginInstance]} />
           </Worker>
+          {debug.length > 0 && (
+            <div className="absolute bottom-4 left-4 rounded bg-black/80 p-2 text-sm text-white">
+              {debug.map((msg, i) => (
+                <div key={i}>{msg}</div>
+              ))}
+            </div>
+          )}
         </div>
       ) : null}
-
-      <div className="absolute bottom-4 left-4 z-50 flex flex-col gap-2">
-        <button
-          onClick={handleProcess}
-          disabled={isProcessing}
-          className="disabled:bg-gray-400 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-        >
-          {isProcessing ? "Processing..." : "Process PDF"}
-        </button>
-        {debug.length > 0 && (
-          <div className="text-gray-600 rounded bg-white p-2 text-sm shadow">
-            {debug.map((msg, i) => (
-              <div key={i}>{msg}</div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
