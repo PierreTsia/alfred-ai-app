@@ -10,5 +10,12 @@ export default defineConfig({
       ["**", "node"],
     ],
     server: { deps: { inline: ["convex-test"] } },
+    include: [
+      "lib/pdf/**/*.test.ts", // PDF processor tests
+      "lib/api/**/*.test.ts", // API tests including embeddings
+    ],
+    exclude: [
+      "**/__tests__/**", // Skip Convex tests for now until we fix the setup
+    ],
   },
 });

@@ -1,3 +1,5 @@
+import { describe, it } from "vitest";
+
 // Helper function to calculate L2 (Euclidean) distance
 function l2Distance(a: number[], b: number[]): number {
   return Math.sqrt(

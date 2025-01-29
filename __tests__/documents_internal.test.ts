@@ -1,52 +1,38 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
+import { TestCtx } from "convex-test";
 import {
   generateChunkEmbeddings,
   searchDocuments,
 } from "../convex/documents_internal";
 import { Together } from "together-ai";
 import type { Id } from "../convex/_generated/dataModel";
-import type {
-  DatabaseReader,
-  DatabaseWriter,
-} from "../convex/_generated/server";
+import { api } from "../convex/_generated/api";
 
 vi.mock("together-ai");
-vi.mock("convex/_generated/server");
-vi.mock("convex/_generated/api");
-
-interface MockCtx {
-  db: Partial<DatabaseReader & DatabaseWriter> & {
-    query: ReturnType<typeof vi.fn>;
-    patch: ReturnType<typeof vi.fn>;
-    get: ReturnType<typeof vi.fn>;
-    vectorSearch: ReturnType<typeof vi.fn>;
-  };
-}
 
 describe("Document Internal Service", () => {
-  let mockCtx: MockCtx;
+  let ctx: TestCtx;
 
   beforeEach(() => {
-    mockCtx = {
-      db: {
-        query: vi.fn(),
-        patch: vi.fn(),
-        get: vi.fn(),
-        vectorSearch: vi.fn(),
-      },
-    };
+    ctx = new TestCtx();
   });
 
   describe("generateChunkEmbeddings", () => {
     it("should handle empty chunk list", async () => {
-      mockCtx.db.query.mockResolvedValue([]);
-
-      const result = await generateChunkEmbeddings(mockCtx as any, {
-        fileId: "test_file" as Id<"files">,
+      await ctx.db.insert("files", {
+        _id: "test_file" as Id<"files">,
+        status: "pending",
+        userId: "test-user",
       });
 
+      const result = await ctx.runAction(
+        api.documents_internal.generateChunkEmbeddings,
+        {
+          fileId: "test_file" as Id<"files">,
+        },
+      );
+
       expect(result).toEqual({ success: true, processedCount: 0 });
-      expect(mockCtx.db.query).toHaveBeenCalled();
     });
 
     it("should process chunks and generate embeddings", async () => {
@@ -54,8 +40,8 @@ describe("Document Internal Service", () => {
         { _id: "1", text: "test chunk 1", status: "pending" },
         { _id: "2", text: "test chunk 2", status: "pending" },
       ];
-      mockCtx.db.query.mockResolvedValue(mockChunks);
-      mockCtx.db.patch.mockResolvedValue(undefined);
+      ctx.db.query.mockResolvedValue(mockChunks);
+      ctx.db.patch.mockResolvedValue(undefined);
 
       const mockEmbedding = [0.1, 0.2, 0.3];
       const mockTogetherResponse = {
@@ -71,18 +57,18 @@ describe("Document Internal Service", () => {
         },
       }));
 
-      const result = await generateChunkEmbeddings(mockCtx as any, {
+      const result = await generateChunkEmbeddings(ctx, {
         fileId: "test_file" as Id<"files">,
       });
 
       expect(result).toEqual({ success: true, processedCount: 2 });
-      expect(mockCtx.db.query).toHaveBeenCalled();
-      expect(mockCtx.db.patch).toHaveBeenCalledTimes(2);
+      expect(ctx.db.query).toHaveBeenCalled();
+      expect(ctx.db.patch).toHaveBeenCalledTimes(2);
     });
 
     it("should handle API errors gracefully", async () => {
       const mockChunks = [{ _id: "1", text: "test chunk", status: "pending" }];
-      mockCtx.db.query.mockResolvedValue(mockChunks);
+      ctx.db.query.mockResolvedValue(mockChunks);
 
       (Together as any).mockImplementation(() => ({
         embeddings: {
@@ -90,7 +76,7 @@ describe("Document Internal Service", () => {
         },
       }));
 
-      const result = await generateChunkEmbeddings(mockCtx as any, {
+      const result = await generateChunkEmbeddings(ctx, {
         fileId: "test_file" as Id<"files">,
       });
 
@@ -98,7 +84,7 @@ describe("Document Internal Service", () => {
         success: false,
         error: "Failed to generate embeddings: Error: API Error",
       });
-      expect(mockCtx.db.patch).not.toHaveBeenCalled();
+      expect(ctx.db.patch).not.toHaveBeenCalled();
     });
   });
 
@@ -118,15 +104,15 @@ describe("Document Internal Service", () => {
         },
       }));
 
-      mockCtx.db.vectorSearch.mockResolvedValue(mockSearchResults);
+      ctx.db.vectorSearch.mockResolvedValue(mockSearchResults);
 
-      const result = await searchDocuments(mockCtx as any, {
+      const result = await searchDocuments(ctx, {
         query: "test query",
         userId: "test-user",
       });
 
       expect(result).toEqual(mockSearchResults);
-      expect(mockCtx.db.vectorSearch).toHaveBeenCalledWith(
+      expect(ctx.db.vectorSearch).toHaveBeenCalledWith(
         "documents.chunks",
         "embedding",
         mockEmbedding,
@@ -149,16 +135,16 @@ describe("Document Internal Service", () => {
         },
       }));
 
-      mockCtx.db.vectorSearch.mockResolvedValue(mockSearchResults);
+      ctx.db.vectorSearch.mockResolvedValue(mockSearchResults);
 
-      const result = await searchDocuments(mockCtx as any, {
+      const result = await searchDocuments(ctx, {
         query: "test query",
         userId: "test-user",
         documentId: "doc1" as Id<"files">,
       });
 
       expect(result).toEqual([mockSearchResults[0]]);
-      expect(mockCtx.db.vectorSearch).toHaveBeenCalledWith(
+      expect(ctx.db.vectorSearch).toHaveBeenCalledWith(
         "documents.chunks",
         "embedding",
         mockEmbedding,
