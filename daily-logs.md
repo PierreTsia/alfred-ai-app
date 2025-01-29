@@ -1,5 +1,23 @@
 ## Latest Updates
 
+### Vector Search Implementation (January 29, 2025 - Night)
+
+🎉 Major discovery and planning:
+- Found Convex's built-in vector search capabilities
+- Created detailed implementation plan: [Vector Search Plan](docs/vector-search.md)
+- Key architectural decisions:
+  - Two-step approach required (Action + Query)
+  - Vector search operations only available in Actions
+  - Document fetching will be reactive via Query
+  - Caching strategy needed for common searches
+
+Next Steps:
+1. Update schema with vector index (768 dimensions)
+2. Implement search action with Together AI
+3. Create document fetching query
+4. Add caching layer
+5. Build UI components
+
 ### Document Processing Pipeline Overhaul (January 29, 2025 - Evening)
 
 🎉 Major improvements to the document processing pipeline:
