@@ -1,6 +1,7 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query, internalMutation } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
+import { internal } from "./_generated/api";
 
 export const generateUploadUrl = mutation(async (ctx) => {
   return await ctx.storage.generateUploadUrl();
@@ -79,7 +80,17 @@ export const removeFile = mutation({
       throw new Error("Not authorized to delete this file");
     }
 
-    // Just remove from database for now
+    // Call internal mutation to handle cascade delete
     await ctx.db.delete(args.id);
+    await ctx.storage.delete(file.storageId);
+
+    // Delete all associated chunks and their embeddings
+    const chunks = await ctx.db
+      .query("documentChunks")
+      .withIndex("by_file", (q) => q.eq("fileId", args.id))
+      .collect();
+
+    // Delete all chunks
+    await Promise.all(chunks.map((chunk) => ctx.db.delete(chunk._id)));
   },
 });

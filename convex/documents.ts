@@ -4,6 +4,7 @@ import {
   action,
   internalQuery,
   internalMutation,
+  internalAction,
   ActionCtx,
   DatabaseReader,
   DatabaseWriter,
@@ -28,7 +29,15 @@ interface DocumentChunk {
 export const storeDocumentChunks = mutation({
   args: {
     fileId: v.id("files"),
-    chunks: v.array(v.string()),
+    chunks: v.array(
+      v.object({
+        text: v.string(),
+        metadata: v.object({
+          page: v.number(),
+          position: v.number(),
+        }),
+      }),
+    ),
   },
   async handler(ctx, args) {
     const file = await ctx.db.get(args.fileId);
@@ -40,23 +49,88 @@ export const storeDocumentChunks = mutation({
       args.chunks.map((chunk) =>
         ctx.db.insert("documentChunks", {
           fileId: args.fileId,
-          content: chunk,
-          metadata: {
-            page: 1,
-            position: 0,
-          },
+          content: chunk.text,
+          metadata: chunk.metadata,
         }),
       ),
     );
 
     await ctx.db.patch(args.fileId, {
-      status: "processed",
+      status: "processing",
       chunkIds,
     });
 
-    await generateEmbeddings(ctx, chunkIds);
+    await ctx.scheduler.runAfter(
+      0,
+      internal.documents.generateChunkEmbeddings,
+      {
+        fileId: args.fileId,
+      },
+    );
 
     return chunkIds;
+  },
+});
+
+export const generateChunkEmbeddings = internalAction({
+  args: {
+    fileId: v.id("files"),
+  },
+  async handler(ctx: ActionCtx, args): Promise<{ processed: number }> {
+    const chunks: DocumentChunk[] = await ctx.runQuery(
+      internal.documents.getUnprocessedChunks,
+      {
+        fileId: args.fileId,
+      },
+    );
+
+    if (chunks.length === 0) {
+      await ctx.runMutation(internal.documents.updateFileStatus, {
+        fileId: args.fileId,
+        status: "processed",
+      });
+      return { processed: 0 };
+    }
+
+    let processedCount = 0;
+    for (const chunk of chunks) {
+      try {
+        const client = new Together({ apiKey: process.env.TOGETHER_API_KEY! });
+        const embedding = await client.embeddings.create({
+          model: "togethercomputer/m2-bert-80M-8k-retrieval",
+          input: chunk.content,
+        });
+
+        await ctx.runMutation(internal.documents.updateChunkEmbeddings, {
+          chunkId: chunk._id,
+          embedding: embedding.data[0].embedding,
+        });
+        processedCount++;
+      } catch (error) {
+        console.error(`Error processing chunk ${chunk._id}:`, error);
+      }
+    }
+
+    if (processedCount === chunks.length) {
+      await ctx.runMutation(internal.documents.updateFileStatus, {
+        fileId: args.fileId,
+        status: "processed",
+      });
+    }
+
+    return { processed: processedCount };
+  },
+});
+
+export const updateFileStatus = internalMutation({
+  args: {
+    fileId: v.id("files"),
+    status: v.string(),
+  },
+  async handler(ctx, args) {
+    await ctx.db.patch(args.fileId, {
+      status: args.status,
+    });
   },
 });
 
