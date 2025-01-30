@@ -1,5 +1,34 @@
 # Daily Development Log
 
+## January 30, 2025
+
+### Convex Testing Setup Attempt Failed
+
+**Time Spent**: ~2 hours
+
+**What We Did**:
+- Attempted to set up Convex testing infrastructure
+- Tried multiple approaches to resolve `_generated` directory issues
+- Experimented with different environment configurations
+
+**Issues Encountered**:
+1. Persistent `_generated` directory recognition issue
+2. `convex dev` failing with `setRawMode EIO` error
+3. Various configuration attempts didn't resolve the core issue
+
+**Next Steps**:
+1. File an issue with Convex team
+2. Consider temporary alternatives:
+   - Mock Convex functions directly
+   - Focus on E2E tests first
+   - Use integration tests without `convex-test`
+
+### 🐛 Fixed Build-Breaking Bug (Evening)
+- Fixed skipped embeddings test that was breaking Vercel build
+- Root cause: Missing export in `together-ai-embeddings.test.ts`
+- Solution: Extracted test logic into exported function while preserving test case
+- Impact: Vercel builds now pass successfully
+
 ## January 29, 2025 
 
 ### 🔄 Testing Infrastructure Decision (Night)
@@ -9,20 +38,20 @@ Decided to switch to Vitest + `convex-test` for backend testing and Playwright f
 - Key benefit: Single test runner for backend, E2E for frontend
 📝 Full analysis in [testing-strategy.md](./testing-strategy.md)
 
-Quick todos:
+**Quick todos**:
 - [x] Remove Jest config and dependencies
 - [x] Set up Vitest with edge-runtime
 - [x] Port PDF processor tests
 - [x] Set up CI with coverage reporting
-- [ ] Fix skipped embeddings test - makes vercel build fail priority !
+- [x] Fix skipped embeddings test - makes vercel build fail priority !
 ```
 ./app/test-embeddings/page.tsx
 Attempted import error: 'testEmbeddings' is not exported from '@/lib/api/together-ai-embeddings.test' (imported as 'testEmbeddings').
 ```
-- [ ] Add basic Convex test (files.list) as proof of concept
+- [-] Add basic Convex test (files.list) as proof of concept
 - [ ] 🔜 Set up Playwright - POSTPONED
 
-Next PR will focus on:
+**Next PR will focus on**:
 - Advanced Convex testing (auth, vector search)
 - Coverage improvements
 - E2E setup with Playwright
@@ -33,7 +62,7 @@ Successfully implemented basic vector search functionality.
 - Performance: Good enough for MVP
 - Issues: Some timeout concerns with large docs
 
-Next steps:
+**Next steps**:
 - [ ] Add latency monitoring
 - [ ] Implement basic caching
 - [ ] Set up error tracking
@@ -45,12 +74,12 @@ Major stability improvements to the pipeline:
 - Added: Proper TypeScript types, better error boundaries
 - Changed: Moved to Convex actions for long tasks
 
-Critical todos:
+**Critical todos**:
 - [ ] Test with larger documents
 - [ ] Add progress UI feedback
 - [ ] Document the new processing flow
 
-Known issues:
+**Known issues**:
 - PDF.js version sensitivity (locked to 3.4.120)
 - Together AI timeouts on large batches
 - Missing progress indicators in UI
