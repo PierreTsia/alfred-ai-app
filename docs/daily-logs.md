@@ -14,7 +14,11 @@ Quick todos:
 - [x] Set up Vitest with edge-runtime
 - [x] Port PDF processor tests
 - [x] Set up CI with coverage reporting
-- [ ] Fix skipped embeddings test
+- [ ] Fix skipped embeddings test - makes vercel build fail priority !
+```
+./app/test-embeddings/page.tsx
+Attempted import error: 'testEmbeddings' is not exported from '@/lib/api/together-ai-embeddings.test' (imported as 'testEmbeddings').
+```
 - [ ] Add basic Convex test (files.list) as proof of concept
 - [ ] 🔜 Set up Playwright - POSTPONED
 
