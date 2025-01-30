@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import fs from "fs/promises";
 import path from "path";
 import { processPDF, processPDFWithPages } from "./pdf-parse-processor";

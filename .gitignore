@@ -16,6 +16,10 @@ next-env.d.ts
 # vercel
 .vercel
 
+# Coverage directory
+coverage/
+coverage-*
+.nyc_output/
 
 .idea/
 .DS_Store
